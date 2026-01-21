@@ -1,0 +1,46 @@
+node_modules
+.pnpm-store/
+
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+dist/
+build/
+out/
+.next/          # Next.js 构建产物
+.nuxt/          # Nuxt.js 构建产物
+.svelte-kit/    # SvelteKit 构建产物
+.vite/          # Vite 缓存
+coverage/       # 测试覆盖率报告（如jest/vitest生成）
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+config/local.js
+config/local.json
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.yarnrc.yml.local
+
+.idea/          # WebStorm/IDEA
+.vscode/        # VSCode（可保留extensions.json/settings.json，需排除其他）
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.sublime-*      # Sublime Text
+*.swp           # Vim 缓存
+*.swo           # Vim 缓存
+.DS_Store       # MacOS 系统文件
+Thumbs.db       # Windows 系统文件
+
+.DS_Store
