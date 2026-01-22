@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ES CRUD | Tavio&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/img/logo.jpg">
+    <meta name="description" content="后端技术博客,别让自己落后于技术的迭代">
+    <meta name="keywords" content="鲜衣努码少年郎">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d594d45.css" as="style"><link rel="preload" href="/assets/js/app.c6ba13aa.js" as="script"><link rel="preload" href="/assets/js/2.8d9f533d.js" as="script"><link rel="preload" href="/assets/js/36.5c29dd6e.js" as="script"><link rel="prefetch" href="/assets/js/10.3c6e6522.js"><link rel="prefetch" href="/assets/js/11.09bc43b4.js"><link rel="prefetch" href="/assets/js/12.a996a87c.js"><link rel="prefetch" href="/assets/js/13.b02d3acf.js"><link rel="prefetch" href="/assets/js/14.64fd6e84.js"><link rel="prefetch" href="/assets/js/15.089c02a9.js"><link rel="prefetch" href="/assets/js/16.8fa236f4.js"><link rel="prefetch" href="/assets/js/17.a1730b7a.js"><link rel="prefetch" href="/assets/js/18.1335a425.js"><link rel="prefetch" href="/assets/js/19.9293cbc0.js"><link rel="prefetch" href="/assets/js/20.5d0fd1df.js"><link rel="prefetch" href="/assets/js/21.4319dddd.js"><link rel="prefetch" href="/assets/js/22.2d6d1193.js"><link rel="prefetch" href="/assets/js/23.f154e330.js"><link rel="prefetch" href="/assets/js/24.66ba0133.js"><link rel="prefetch" href="/assets/js/25.5979047a.js"><link rel="prefetch" href="/assets/js/26.04889c33.js"><link rel="prefetch" href="/assets/js/27.337928e8.js"><link rel="prefetch" href="/assets/js/28.665066df.js"><link rel="prefetch" href="/assets/js/29.5aa838b8.js"><link rel="prefetch" href="/assets/js/3.1aac6e80.js"><link rel="prefetch" href="/assets/js/30.a8923cf6.js"><link rel="prefetch" href="/assets/js/31.a290d548.js"><link rel="prefetch" href="/assets/js/32.cb2b7fdd.js"><link rel="prefetch" href="/assets/js/33.3286dca2.js"><link rel="prefetch" href="/assets/js/34.9aebb473.js"><link rel="prefetch" href="/assets/js/35.5777ff14.js"><link rel="prefetch" href="/assets/js/37.cbf6fde7.js"><link rel="prefetch" href="/assets/js/38.2a1572ab.js"><link rel="prefetch" href="/assets/js/39.000aacf6.js"><link rel="prefetch" href="/assets/js/4.16da1e3f.js"><link rel="prefetch" href="/assets/js/40.8fbbcfa8.js"><link rel="prefetch" href="/assets/js/41.1b995757.js"><link rel="prefetch" href="/assets/js/42.575e5238.js"><link rel="prefetch" href="/assets/js/43.0a4cb54f.js"><link rel="prefetch" href="/assets/js/44.8d3b4283.js"><link rel="prefetch" href="/assets/js/45.ae001bba.js"><link rel="prefetch" href="/assets/js/46.fc29dcb1.js"><link rel="prefetch" href="/assets/js/47.628ee1ef.js"><link rel="prefetch" href="/assets/js/48.7d4f854a.js"><link rel="prefetch" href="/assets/js/49.e848253a.js"><link rel="prefetch" href="/assets/js/5.20e9c2cf.js"><link rel="prefetch" href="/assets/js/50.045225be.js"><link rel="prefetch" href="/assets/js/51.d05a2035.js"><link rel="prefetch" href="/assets/js/52.35a2519d.js"><link rel="prefetch" href="/assets/js/53.ca8d5bc8.js"><link rel="prefetch" href="/assets/js/54.eb93e6ae.js"><link rel="prefetch" href="/assets/js/55.27ff3cca.js"><link rel="prefetch" href="/assets/js/56.4a98635a.js"><link rel="prefetch" href="/assets/js/57.db243c6d.js"><link rel="prefetch" href="/assets/js/58.650ffef2.js"><link rel="prefetch" href="/assets/js/59.9af578d0.js"><link rel="prefetch" href="/assets/js/6.cf5ce51d.js"><link rel="prefetch" href="/assets/js/60.800afb74.js"><link rel="prefetch" href="/assets/js/61.59b23cca.js"><link rel="prefetch" href="/assets/js/62.35998712.js"><link rel="prefetch" href="/assets/js/63.824df362.js"><link rel="prefetch" href="/assets/js/64.2f51e9d0.js"><link rel="prefetch" href="/assets/js/65.926e2499.js"><link rel="prefetch" href="/assets/js/66.2af85da2.js"><link rel="prefetch" href="/assets/js/67.bbd8d4b3.js"><link rel="prefetch" href="/assets/js/68.163c774f.js"><link rel="prefetch" href="/assets/js/69.deed8d29.js"><link rel="prefetch" href="/assets/js/7.92776da2.js"><link rel="prefetch" href="/assets/js/70.d6a81068.js"><link rel="prefetch" href="/assets/js/71.9adb8c50.js"><link rel="prefetch" href="/assets/js/72.9ba26fc5.js"><link rel="prefetch" href="/assets/js/73.c3ee5d2f.js"><link rel="prefetch" href="/assets/js/74.af7973c7.js"><link rel="prefetch" href="/assets/js/75.ed8e7990.js"><link rel="prefetch" href="/assets/js/76.668519a5.js"><link rel="prefetch" href="/assets/js/77.d6cb2694.js"><link rel="prefetch" href="/assets/js/78.494cff39.js"><link rel="prefetch" href="/assets/js/79.486534af.js"><link rel="prefetch" href="/assets/js/8.d7fc67a9.js"><link rel="prefetch" href="/assets/js/80.c60f84eb.js"><link rel="prefetch" href="/assets/js/81.80ab610c.js"><link rel="prefetch" href="/assets/js/82.38a483d0.js"><link rel="prefetch" href="/assets/js/83.72b7d6a4.js"><link rel="prefetch" href="/assets/js/84.f5a347be.js"><link rel="prefetch" href="/assets/js/85.f3b7b32b.js"><link rel="prefetch" href="/assets/js/86.1d47bd30.js"><link rel="prefetch" href="/assets/js/87.2361eddb.js"><link rel="prefetch" href="/assets/js/88.aef9e475.js"><link rel="prefetch" href="/assets/js/89.0a95e3be.js"><link rel="prefetch" href="/assets/js/9.f6c9df9a.js"><link rel="prefetch" href="/assets/js/90.ddf7b632.js"><link rel="prefetch" href="/assets/js/91.2a96bacf.js"><link rel="prefetch" href="/assets/js/92.f61fc5ec.js"><link rel="prefetch" href="/assets/js/93.40a17799.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d594d45.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.jpg" alt="Tavio's blog" class="logo"> <span class="site-name can-hide">Tavio's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><a href="/java/" class="link-title">Java</a> <span class="title" style="display:none;">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/node/jvm/" class="nav-link">JVM底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/thread/" class="nav-link">邪恶多线程</a></li><li class="dropdown-item"><!----> <a href="/node/mybatis/" class="nav-link">MyBatis底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/spring/" class="nav-link">Spring底层原理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/db/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/mysql/" class="nav-link">MySQL的优化之路</a></li><li class="dropdown-item"><!----> <a href="/note/clickhouse/" class="nav-link">ClickHouse的高性能</a></li><li class="dropdown-item"><!----> <a href="/note/redis/" class="nav-link">Redis的快速查询</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/rabbitmq/" class="nav-link">RabbitMQ的生产</a></li><li class="dropdown-item"><!----> <a href="/note/kafka/" class="nav-link">Kafka的高吞吐量</a></li><li class="dropdown-item"><!----> <a href="/note/es/" class="nav-link">ES的入门到入坑</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="实践" class="dropdown-title"><a href="/practice/" class="link-title">实践</a> <span class="title" style="display:none;">实践</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/284351/" class="nav-link">MySQL自增ID主键空洞</a></li><li class="dropdown-item"><!----> <a href="/pages/8f1df0/" class="nav-link">前端实现长整型排序</a></li><li class="dropdown-item"><!----> <a href="/pages/13fcc3/" class="nav-link">MySQL无感换表</a></li><li class="dropdown-item"><!----> <a href="/pages/69e163/" class="nav-link">Redis延时双删</a></li><li class="dropdown-item"><!----> <a href="/pages/f43494/" class="nav-link">高并发秒杀优惠卷</a></li><li class="dropdown-item"><!----> <a href="/pages/ab9a49/" class="nav-link">AOP无侵入式告警</a></li><li class="dropdown-item"><!----> <a href="/pages/a3f3fd/" class="nav-link">长短链接跳转</a></li><li class="dropdown-item"><!----> <a href="/pages/942d4b/" class="nav-link">订单超时取消</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/tavio-zhang/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.jpg"> <div class="blogger-info"><h3>Tavio Zhang</h3> <span>努力学习的小码喽</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><a href="/java/" class="link-title">Java</a> <span class="title" style="display:none;">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/node/jvm/" class="nav-link">JVM底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/thread/" class="nav-link">邪恶多线程</a></li><li class="dropdown-item"><!----> <a href="/node/mybatis/" class="nav-link">MyBatis底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/spring/" class="nav-link">Spring底层原理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/db/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/mysql/" class="nav-link">MySQL的优化之路</a></li><li class="dropdown-item"><!----> <a href="/note/clickhouse/" class="nav-link">ClickHouse的高性能</a></li><li class="dropdown-item"><!----> <a href="/note/redis/" class="nav-link">Redis的快速查询</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/rabbitmq/" class="nav-link">RabbitMQ的生产</a></li><li class="dropdown-item"><!----> <a href="/note/kafka/" class="nav-link">Kafka的高吞吐量</a></li><li class="dropdown-item"><!----> <a href="/note/es/" class="nav-link">ES的入门到入坑</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="实践" class="dropdown-title"><a href="/practice/" class="link-title">实践</a> <span class="title" style="display:none;">实践</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/284351/" class="nav-link">MySQL自增ID主键空洞</a></li><li class="dropdown-item"><!----> <a href="/pages/8f1df0/" class="nav-link">前端实现长整型排序</a></li><li class="dropdown-item"><!----> <a href="/pages/13fcc3/" class="nav-link">MySQL无感换表</a></li><li class="dropdown-item"><!----> <a href="/pages/69e163/" class="nav-link">Redis延时双删</a></li><li class="dropdown-item"><!----> <a href="/pages/f43494/" class="nav-link">高并发秒杀优惠卷</a></li><li class="dropdown-item"><!----> <a href="/pages/ab9a49/" class="nav-link">AOP无侵入式告警</a></li><li class="dropdown-item"><!----> <a href="/pages/a3f3fd/" class="nav-link">长短链接跳转</a></li><li class="dropdown-item"><!----> <a href="/pages/942d4b/" class="nav-link">订单超时取消</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/tavio-zhang/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/pages/4a1e64/" aria-current="page" class="active sidebar-link">ES CRUD</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/pages/4a1e64/#一、elasticsearch-核心概念与价值" class="sidebar-link">一、Elasticsearch 核心概念与价值</a></li><li class="sidebar-sub-header level2"><a href="/pages/4a1e64/#二、从-mysql-视角理解-es-核心概念" class="sidebar-link">二、从 MySQL 视角理解 ES 核心概念</a></li><li class="sidebar-sub-header level2"><a href="/pages/4a1e64/#三、索引操作-数据结构的定义与管理" class="sidebar-link">三、索引操作：数据结构的定义与管理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_3-1-创建索引-定义-mapping" class="sidebar-link">3.1 创建索引（定义 Mapping）</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#基础语法" class="sidebar-link">基础语法</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#常用字段类型说明" class="sidebar-link">常用字段类型说明</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#注意事项" class="sidebar-link">注意事项</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_3-2-查看索引映射" class="sidebar-link">3.2 查看索引映射</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_3-3-修改索引-仅支持添加字段" class="sidebar-link">3.3 修改索引（仅支持添加字段）</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#语法-添加字段" class="sidebar-link">语法：添加字段</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#若需修改字段类型怎么办" class="sidebar-link">若需修改字段类型怎么办？</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_3-4-删除索引" class="sidebar-link">3.4 删除索引</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/4a1e64/#四、文档操作-数据的增删改查" class="sidebar-link">四、文档操作：数据的增删改查</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_4-1-添加文档" class="sidebar-link">4.1 添加文档</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#自动生成-id-适合无需自定义-id-的场景" class="sidebar-link">自动生成 _id（适合无需自定义 ID 的场景）</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#自定义-id-适合需关联业务-id-的场景" class="sidebar-link">自定义 _id（适合需关联业务 ID 的场景）</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_4-2-删除文档" class="sidebar-link">4.2 删除文档</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_4-3-修改文档" class="sidebar-link">4.3 修改文档</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#全量替换-覆盖文档" class="sidebar-link">全量替换（覆盖文档）</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#部分更新-仅修改指定字段" class="sidebar-link">部分更新（仅修改指定字段）</a></li><li class="sidebar-sub-header level3"><a href="/pages/4a1e64/#_4-4-搜索文档-从基础到复杂查询" class="sidebar-link">4.4 搜索文档：从基础到复杂查询</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-1-基础搜索-查询所有文档" class="sidebar-link">4.4.1 基础搜索：查询所有文档</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-2-全文搜索-匹配分词后的关键词" class="sidebar-link">4.4.2 全文搜索：匹配分词后的关键词</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-3-精确匹配-完全匹配字段值" class="sidebar-link">4.4.3 精确匹配：完全匹配字段值</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-4-范围查询-筛选数值-日期范围" class="sidebar-link">4.4.4 范围查询：筛选数值/日期范围</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-5-组合条件查询-多条件逻辑组合" class="sidebar-link">4.4.5 组合条件查询：多条件逻辑组合</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-6-搜索结果处理-分页、排序与筛选" class="sidebar-link">4.4.6 搜索结果处理：分页、排序与筛选</a></li><li class="sidebar-sub-header level5"><a href="/pages/4a1e64/#分页-控制返回数量" class="sidebar-link">分页（控制返回数量）</a></li><li class="sidebar-sub-header level5"><a href="/pages/4a1e64/#排序-按字段排序" class="sidebar-link">排序（按字段排序）</a></li><li class="sidebar-sub-header level5"><a href="/pages/4a1e64/#字段筛选-只返回需要的字段" class="sidebar-link">字段筛选（只返回需要的字段）</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-7-聚合分析-实时统计与分析" class="sidebar-link">4.4.7 聚合分析：实时统计与分析</a></li><li class="sidebar-sub-header level4"><a href="/pages/4a1e64/#_4-4-8-地理位置搜索-查找附近的文档" class="sidebar-link">4.4.8 地理位置搜索：查找附近的文档</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/4a1e64/#五、最佳实践与注意事项" class="sidebar-link">五、最佳实践与注意事项</a></li></ul></li><li><a href="/pages/5113b6/" class="sidebar-link">ES分布式架构</a></li><li><a href="/pages/0ed63c/" class="sidebar-link">ES ISR机制</a></li><li><a href="/pages/bdd874/" class="sidebar-link">ES深度分页查询优化</a></li><li><a href="/pages/9f755f/" class="sidebar-link">ES数据写入到查询</a></li><li><a href="/pages/af50b1/" class="sidebar-link">ELK的底层逻辑</a></li><li><a href="/pages/78e0ba/" class="sidebar-link">ES ILM</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/note/es/#《Elasticsearch》笔记" data-v-06225672>《Elasticsearch》笔记</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/tavio-zhang" target="_blank" title="作者" class="beLink" data-v-06225672>Tavio</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2025-05-12</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABH1JREFUSA3tVl1oHFUUPmdmd2ltklqbpJDiNnXFmgbFktho7YMPNiJSSZM0+CAYSkUELVhM6YuwIPpgoOKDqOBDC0XE2CQoNtQXBUFTTcCi+Wlh1V2TQExsUzcltd3M9Tt3ZjZzZ2fT+OJTL8yeM+eee757fmeJbq//KQL8X3DUSFOcfr7cRsRtxNQMWueeVzOkaITIGqQHNg5y8+jNW9ldM7A6nTpAjuolUikAwq7CE3WcM2RRDz+XGVgN3FptU/aUSlvq9Pa3iZ1+sgAqJyyAFqkipd9dqiwHF3P65YycLWc/6sqGrvoEoIp6DOFaX5h6+dnfjkWprwqsPk0dUGq5vySwDImC10KxFHgGL1SWoc92O3eVht09qdXNH11I2SsTsJYqMWzihqGMi+A+Garf3BAuuLI5oGlULyNfyB/HYNujwktOfRrMr5t77NmevqaUopx0grnKAyvVpmwUDB4x6FPXuGvYLTDwWsejwgtgkYKPqRJg8SV6xaiZ3ZTppGneS4yfH5/66fZSDHv+QZci/+h5c5UHtpy67JUqGppM0sh0Nc1dW6/N1W5Yoqat8/TU/VnadmdeW2PLLSyh0cvxBs3KbqTmwYPpxN4do/mzE8nEpvX/UMu2Wbp74zUAK5q6WkHns7V0eWkdPbPzd3rxkTGybadYySumVzhcaJFbs5UrEkQ/+CK8gF5dnh/6ciIZ73gwQ927L1IitoxKLXYP3SjYdOrHHfTZhRRlFyrorafPk20B3HPD1y2G3qKZME5Jcf3t/HUC13/8tSd++vqFveMUTwAUxSUFI1QekR1+bIze3D9MF2aq6cPvG72CgnldWCFqyRw3lwH8ZMerjTD9ElRO7Gv44wNpC90aASqGfVlz/Rx17srQ57/UU26hkhQqUB7dBR71WmzQhHUnblGmVOEw0jhbV1n9OlXUDCIRGaNV5Jp43N516fN7JmnTHdfp7Hgy0luO4aMhtkLL8Bi3bUWYvzh5Mn1dTxrL6QmGuRhGL/TiTTxRoEdTszSaq9GR0NGA3KdkOz3hqSV3MIDhQ5IVX/Ivx3umBti2es2h4eZby7x8br1rkf7Mo90AqC8aQ3sJeNzqFRu+vSANAQe3PL7l0HGOAdwDCeZYvNKeoZp1Qfs6Aipndh86HmFRi0LAnEO47wsqM6cdfjh3jBPUzhZy7nvlUfFsamED1VQt6aISHVymXZ/B2aCtIG8AI8xfobj2d3en1wWVhOeHELKmLQ1s211s88comkv4UCwWyF787mJdYXtNfhKAXVqnKTq8QZvGAGGOfaTo5pGZ/PwbUCr5+DPr/1J92JNHr9aOl/F3iI5+O1nfybsGxoimvZ3ViWSluDITw3P37mypheDIPY0tw7+O/5ApbkYw+zpfaUVu32Pi98+defdUhEpZkRFq0aqyNh9FuL9hpYbEm6iwi0z2REd09ZmyENEbuhjDWzKvZXTqKYaBIr3tt5kuPtQBZFvEUwHt60vfCNu41XsksH9Ij1BMMz1Y0OOunHNShFIP5868g5zeXmuLwL9T4b6Q2+KejgAAAABJRU5ErkJggg==">ES CRUD<!----></h1>  <div class="theme-vdoing-content content__default"><p>Elasticsearch（简称 ES）是一款开源的分布式搜索引擎，以<strong>实时全文检索</strong>、<strong>高扩展性</strong>和<strong>灵活的数据分析能力</strong>著称。其核心设计围绕「文档（Document）」展开，所有操作均通过 RESTful API 实现，与开发语言无关，仅需通过 HTTP 方法（PUT/POST/GET/DELETE）配合 JSON 格式即可完成交互。</p> <h2 id="一、elasticsearch-核心概念与价值"><a href="#一、elasticsearch-核心概念与价值" class="header-anchor">#</a> 一、Elasticsearch 核心概念与价值</h2> <p>相较于传统关系型数据库，ES 更擅长处理<strong>非结构化/半结构化数据</strong>（如日志、文本、地理位置等），并支持复杂的全文搜索、聚合分析和地理位置查询，广泛应用于日志分析、电商搜索、监控系统等场景。</p> <h2 id="二、从-mysql-视角理解-es-核心概念"><a href="#二、从-mysql-视角理解-es-核心概念" class="header-anchor">#</a> 二、从 MySQL 视角理解 ES 核心概念</h2> <p>对于熟悉 MySQL 的开发者，可通过以下对应关系快速掌握 ES 核心概念：</p> <table><thead><tr><th>ES 概念</th> <th>MySQL 概念</th> <th>核心作用</th></tr></thead> <tbody><tr><td>Index（索引）</td> <td>Database（数据库）</td> <td>存储相似结构文档的容器，一个索引可理解为一个「数据集合」</td></tr> <tr><td>Document（文档）</td> <td>Row（行）</td> <td>一条完整的数据记录，ES 中以 JSON 格式存储，每个文档有唯一 _id 标识</td></tr> <tr><td>Field（字段）</td> <td>Column（列）</td> <td>文档的属性（如「姓名」「时间」），对应 JSON 中的键值对</td></tr> <tr><td>Mapping（映射）</td> <td>Table Schema（表结构）</td> <td>定义文档中字段的类型、分词规则等元数据，相当于「数据结构说明书」</td></tr></tbody></table> <p><strong>关键区别</strong>：<br>
+ES 是「搜索引擎」而非「数据库」，其底层基于倒排索引实现高效全文检索，而 MySQL 基于 B+ 树实现关系型数据存储，二者适用场景互补（如 ES 适合搜索，MySQL 适合事务性存储）。</p> <h2 id="三、索引操作-数据结构的定义与管理"><a href="#三、索引操作-数据结构的定义与管理" class="header-anchor">#</a> 三、索引操作：数据结构的定义与管理</h2> <p>索引是 ES 中数据存储的顶层容器，创建索引时需通过 Mapping 定义字段规则（类似 MySQL 建表时定义字段类型）。</p> <h3 id="_3-1-创建索引-定义-mapping"><a href="#_3-1-创建索引-定义-mapping" class="header-anchor">#</a> 3.1 创建索引（定义 Mapping）</h3> <p>创建索引的核心是声明字段类型（Mapping），ES 支持多种字段类型，需根据业务场景选择（如全文搜索用 text，精确匹配用 keyword）。</p> <h4 id="基础语法"><a href="#基础语法" class="header-anchor">#</a> 基础语法</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>PUT /索引名
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;字段名1&quot;: { &quot;type&quot;: &quot;字段类型&quot;, &quot;可选参数&quot;: &quot;值&quot; },
+      &quot;字段名2&quot;: { &quot;type&quot;: &quot;字段类型&quot; }
+    }
+  }
+}
+
+// 示例：创建「公司信息」索引
+PUT /company
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;name&quot;: { &quot;type&quot;: &quot;text&quot; }, // 公司名称（支持全文搜索，会被分词）
+      &quot;city&quot;: { &quot;type&quot;: &quot;keyword&quot; }, // 城市（精确匹配，不分词）
+      &quot;create_time&quot;: { &quot;type&quot;: &quot;date&quot;, &quot;format&quot;: &quot;yyyy-MM-dd HH:mm:ss&quot; }, // 成立时间（自定义格式）
+      &quot;address&quot;: { &quot;type&quot;: &quot;geo_point&quot; }, // 地址（经纬度，支持地理位置查询）
+      &quot;employees&quot;: { &quot;type&quot;: &quot;integer&quot; } // 员工数量（整数类型）
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><h4 id="常用字段类型说明"><a href="#常用字段类型说明" class="header-anchor">#</a> 常用字段类型说明</h4> <table><thead><tr><th>字段类型</th> <th>适用场景</th> <th>注意事项</th></tr></thead> <tbody><tr><td>text</td> <td>全文搜索（如文章内容、商品名称）</td> <td>会被分词器拆分（如「Java开发」拆分为「Java」「开发」），不支持聚合操作</td></tr> <tr><td>keyword</td> <td>精确查询/聚合（如城市、状态、标签）</td> <td>不分词，需完全匹配（如「广州市」只能匹配「广州市」）</td></tr> <tr><td>数字类型（long、integer 等）</td> <td>数值存储（如数量、价格）</td> <td>支持范围查询（如 <code>&gt;100</code>、<code>&lt;=1000</code>）</td></tr> <tr><td>date</td> <td>日期时间（如创建时间、过期时间）</td> <td>支持自定义格式（默认兼容 &quot;yyyy-MM-dd&quot;、时间戳等），需统一格式避免解析错误</td></tr> <tr><td>geo_point</td> <td>地理位置（经纬度点，如店铺位置、用户坐标）</td> <td>支持「附近搜索」「距离排序」等地理查询</td></tr> <tr><td>boolean</td> <td>布尔值（如是否启用、是否删除）</td> <td>可接受 true/false、&quot;true&quot;/&quot;false&quot; 或 1/0</td></tr></tbody></table> <h4 id="注意事项"><a href="#注意事项" class="header-anchor">#</a> 注意事项</h4> <ul><li>索引名称需小写，且不能包含空格、斜杠等特殊字符；</li> <li>若不声明 Mapping，ES 会根据第一条文档自动推断字段类型（动态映射），但可能存在误差（如数字被识别为 text），建议<strong>显式定义 Mapping</strong>；</li> <li>ES 无专门数组类型，任何字段均可存储数组（如 <code>[&quot;Java&quot;, &quot;Python&quot;]</code>），但需保证数组内元素类型一致。</li></ul> <h3 id="_3-2-查看索引映射"><a href="#_3-2-查看索引映射" class="header-anchor">#</a> 3.2 查看索引映射</h3> <p>查看已创建索引的字段定义，确认 Mapping 是否符合预期：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>GET /company/_mapping
+
+// 响应示例（简化）：
+{
+  &quot;company&quot;: {
+    &quot;mappings&quot;: {
+      &quot;properties&quot;: {
+        &quot;name&quot;: { &quot;type&quot;: &quot;text&quot; },
+        &quot;city&quot;: { &quot;type&quot;: &quot;keyword&quot; }
+        // 其他字段...
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_3-3-修改索引-仅支持添加字段"><a href="#_3-3-修改索引-仅支持添加字段" class="header-anchor">#</a> 3.3 修改索引（仅支持添加字段）</h3> <p>ES 的索引 Mapping 一旦创建，<strong>字段类型不可修改</strong>（因底层倒排索引结构不可变），但可新增字段：</p> <h4 id="语法-添加字段"><a href="#语法-添加字段" class="header-anchor">#</a> 语法：添加字段</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>PUT /索引名/_mapping
+{
+  &quot;properties&quot;: {
+    &quot;新字段名&quot;: { &quot;type&quot;: &quot;字段类型&quot; }
+  }
+}
+
+// 示例：为 company 索引添加「行业」字段
+PUT /company/_mapping
+{
+  &quot;properties&quot;: {
+    &quot;industry&quot;: { &quot;type&quot;: &quot;keyword&quot; } // 行业（精确匹配，用于筛选）
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h4 id="若需修改字段类型怎么办"><a href="#若需修改字段类型怎么办" class="header-anchor">#</a> 若需修改字段类型怎么办？</h4> <p>需通过「重建索引」实现：</p> <ol><li>创建新索引（含正确的 Mapping）；</li> <li>通过 <code>_reindex</code> API 将旧索引数据迁移至新索引；</li> <li>用别名（Alias）切换读写指向，实现无缝迁移。</li></ol> <h3 id="_3-4-删除索引"><a href="#_3-4-删除索引" class="header-anchor">#</a> 3.4 删除索引</h3> <p>删除索引会彻底清除所有数据和 Mapping，操作不可逆，需谨慎！</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>DELETE /company
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="四、文档操作-数据的增删改查"><a href="#四、文档操作-数据的增删改查" class="header-anchor">#</a> 四、文档操作：数据的增删改查</h2> <p>文档是 ES 中最小的数据单元（类似 MySQL 的行），以 JSON 格式存储，每个文档有唯一 <code>_id</code>（可自定义或由 ES 自动生成）。</p> <h3 id="_4-1-添加文档"><a href="#_4-1-添加文档" class="header-anchor">#</a> 4.1 添加文档</h3> <h4 id="自动生成-id-适合无需自定义-id-的场景"><a href="#自动生成-id-适合无需自定义-id-的场景" class="header-anchor">#</a> 自动生成 _id（适合无需自定义 ID 的场景）</h4> <p>使用 POST 方法，ES 会自动生成唯一字符串作为 <code>_id</code>：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>POST /索引名/_doc
+{
+  &quot;字段1&quot;: &quot;值1&quot;,
+  &quot;字段2&quot;: &quot;值2&quot;
+}
+
+// 示例：
+POST /company/_doc
+{
+  &quot;name&quot;: &quot;广州测试技术公司&quot;,
+  &quot;city&quot;: &quot;广州市&quot;,
+  &quot;create_time&quot;: &quot;2022-01-11 20:40:00&quot;,
+  &quot;address&quot;: &quot;22.9982,113.3737&quot;, // 经纬度格式：纬度,经度
+  &quot;industry&quot;: &quot;计算机&quot;,
+  &quot;employees&quot;: 50
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h4 id="自定义-id-适合需关联业务-id-的场景"><a href="#自定义-id-适合需关联业务-id-的场景" class="header-anchor">#</a> 自定义 _id（适合需关联业务 ID 的场景）</h4> <p>使用 PUT 方法，指定 <code>_id</code>（如业务主键）：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>PUT /索引名/_doc/自定义ID
+{
+  &quot;字段1&quot;: &quot;值1&quot;,
+  &quot;字段2&quot;: &quot;值2&quot;
+}
+
+// 示例（指定 ID 为 1001）：
+PUT /company/_doc/1001
+{
+  &quot;name&quot;: &quot;深圳Java开发公司&quot;,
+  &quot;city&quot;: &quot;深圳市&quot;,
+  &quot;create_time&quot;: &quot;2021-05-20 10:30:00&quot;,
+  &quot;address&quot;: &quot;22.5431,114.0579&quot;,
+  &quot;industry&quot;: &quot;软件&quot;,
+  &quot;employees&quot;: 120
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="_4-2-删除文档"><a href="#_4-2-删除文档" class="header-anchor">#</a> 4.2 删除文档</h3> <p>通过 <code>_id</code> 删除单条文档：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>DELETE /索引名/_doc/文档ID
+
+// 示例（删除 ID 为 1001 的文档）：
+DELETE /company/_doc/1001
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p><strong>注意</strong>：删除文档不会立即释放磁盘空间，而是标记为删除，后续通过段合并（segment merge）清理。</p> <h3 id="_4-3-修改文档"><a href="#_4-3-修改文档" class="header-anchor">#</a> 4.3 修改文档</h3> <p>ES 支持两种修改方式：全量替换和部分更新。</p> <h4 id="全量替换-覆盖文档"><a href="#全量替换-覆盖文档" class="header-anchor">#</a> 全量替换（覆盖文档）</h4> <p>本质是「删除旧文档 + 插入新文档」，需包含所有字段（未指定的字段会丢失）：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>PUT /索引名/_doc/文档ID
+{
+  &quot;字段1&quot;: &quot;新值1&quot;,
+  &quot;字段2&quot;: &quot;新值2&quot; // 需包含所有要保留的字段
+}
+
+// 示例（替换 ID 为 1001 的文档）：
+PUT /company/_doc/1001
+{
+  &quot;name&quot;: &quot;深圳Java开发公司（更新后）&quot;, // 修改名称
+  &quot;city&quot;: &quot;深圳市&quot;, // 保留原字段
+  &quot;create_time&quot;: &quot;2021-05-20 10:30:00&quot;,
+  &quot;address&quot;: &quot;22.5431,114.0579&quot;,
+  &quot;industry&quot;: &quot;软件&quot;,
+  &quot;employees&quot;: 150 // 修改员工数量
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h4 id="部分更新-仅修改指定字段"><a href="#部分更新-仅修改指定字段" class="header-anchor">#</a> 部分更新（仅修改指定字段）</h4> <p>更高效（无需传输完整文档），通过 <code>_update</code> API 实现：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>POST /索引名/_update/文档ID
+{
+  &quot;doc&quot;: {
+    &quot;字段1&quot;: &quot;新值1&quot;, // 仅指定需修改的字段
+    &quot;字段2&quot;: &quot;新值2&quot;
+  }
+}
+
+// 示例（仅修改 ID 为 1001 的员工数量）：
+POST /company/_update/1001
+{
+  &quot;doc&quot;: {
+    &quot;employees&quot;: 180
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h3 id="_4-4-搜索文档-从基础到复杂查询"><a href="#_4-4-搜索文档-从基础到复杂查询" class="header-anchor">#</a> 4.4 搜索文档：从基础到复杂查询</h3> <p>ES 的搜索能力是其核心优势，支持全文检索、条件组合、范围筛选等多种场景。</p> <h4 id="_4-4-1-基础搜索-查询所有文档"><a href="#_4-4-1-基础搜索-查询所有文档" class="header-anchor">#</a> 4.4.1 基础搜索：查询所有文档</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;match_all&quot;: {} // 匹配所有文档
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><strong>响应说明</strong>：</p> <ul><li><code>hits.total</code>：匹配的文档总数；</li> <li><code>hits.hits</code>：匹配的文档列表（默认前 10 条）；</li> <li><code>_id</code>：文档唯一标识；</li> <li><code>_source</code>：文档原始数据。</li></ul> <h4 id="_4-4-2-全文搜索-匹配分词后的关键词"><a href="#_4-4-2-全文搜索-匹配分词后的关键词" class="header-anchor">#</a> 4.4.2 全文搜索：匹配分词后的关键词</h4> <p>针对 <code>text</code> 类型字段（如公司名称），会对搜索词分词后匹配：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 搜索名称中含「测试」或「技术」的公司（text 类型会分词）
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;name&quot;: &quot;测试技术&quot;
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h4 id="_4-4-3-精确匹配-完全匹配字段值"><a href="#_4-4-3-精确匹配-完全匹配字段值" class="header-anchor">#</a> 4.4.3 精确匹配：完全匹配字段值</h4> <p>针对 <code>keyword</code> 类型字段（如城市、行业），需完全匹配：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 精确匹配城市为「广州市」的公司
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;term&quot;: {
+      &quot;city&quot;: &quot;广州市&quot;
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h4 id="_4-4-4-范围查询-筛选数值-日期范围"><a href="#_4-4-4-范围查询-筛选数值-日期范围" class="header-anchor">#</a> 4.4.4 范围查询：筛选数值/日期范围</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 查询 2020 年之后成立的公司（日期范围）
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;range&quot;: {
+      &quot;create_time&quot;: {
+        &quot;gte&quot;: &quot;2020-01-01 00:00:00&quot;, // 大于等于
+        &quot;lte&quot;: &quot;now&quot; // 小于等于当前时间
+      }
+    }
+  }
+}
+
+// 查询员工数在 100-500 之间的公司（数值范围）
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;range&quot;: {
+      &quot;employees&quot;: {
+        &quot;gt&quot;: 100, // 大于
+        &quot;lt&quot;: 500  // 小于
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h4 id="_4-4-5-组合条件查询-多条件逻辑组合"><a href="#_4-4-5-组合条件查询-多条件逻辑组合" class="header-anchor">#</a> 4.4.5 组合条件查询：多条件逻辑组合</h4> <p>通过 <code>bool</code> 查询组合多个条件（must/should/filter/must_not）：</p> <table><thead><tr><th>条件类型</th> <th>作用</th> <th>是否影响评分</th></tr></thead> <tbody><tr><td>must</td> <td>必须满足（类似 AND）</td> <td>是</td></tr> <tr><td>should</td> <td>至少满足一个（类似 OR）</td> <td>是</td></tr> <tr><td>filter</td> <td>必须满足（过滤）</td> <td>否（性能更好）</td></tr> <tr><td>must_not</td> <td>必须不满足（类似 NOT）</td> <td>否</td></tr></tbody></table> <p>示例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 条件：
+// 1. 名称含「Java」（must）
+// 2. 城市是广州或深圳（should，至少1个）
+// 3. 成立时间在2020年后（filter）
+// 4. 行业不是「计算机」（must_not）
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;must&quot;: [
+        { &quot;match&quot;: { &quot;name&quot;: &quot;Java&quot; }}
+      ],
+      &quot;should&quot;: [
+        { &quot;term&quot;: { &quot;city&quot;: &quot;广州市&quot; }},
+        { &quot;term&quot;: { &quot;city&quot;: &quot;深圳市&quot; }}
+      ],
+      &quot;minimum_should_match&quot;: 1, // 至少满足1个should条件
+      &quot;filter&quot;: [
+        { &quot;range&quot;: { &quot;create_time&quot;: { &quot;gte&quot;: &quot;2020-01-01&quot; }}}
+      ],
+      &quot;must_not&quot;: [
+        { &quot;term&quot;: { &quot;industry&quot;: &quot;计算机&quot; }}
+      ]
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><h4 id="_4-4-6-搜索结果处理-分页、排序与筛选"><a href="#_4-4-6-搜索结果处理-分页、排序与筛选" class="header-anchor">#</a> 4.4.6 搜索结果处理：分页、排序与筛选</h4> <h5 id="分页-控制返回数量"><a href="#分页-控制返回数量" class="header-anchor">#</a> 分页（控制返回数量）</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 第2页（从第10条开始），每页10条
+GET /company/_search
+{
+  &quot;from&quot;: 10, // 起始位置（0为第一条）
+  &quot;size&quot;: 10, // 每页条数
+  &quot;query&quot;: { &quot;match_all&quot;: {} }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><strong>注意</strong>：<code>from + size</code> 过大可能导致性能问题，深分页建议用 <code>search_after</code>。</p> <h5 id="排序-按字段排序"><a href="#排序-按字段排序" class="header-anchor">#</a> 排序（按字段排序）</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 按成立时间倒序（新公司在前），员工数正序（人数少在前）
+GET /company/_search
+{
+  &quot;query&quot;: { &quot;match_all&quot;: {} },
+  &quot;sort&quot;: [
+    { &quot;create_time&quot;: { &quot;order&quot;: &quot;desc&quot; }}, // 降序
+    { &quot;employees&quot;: { &quot;order&quot;: &quot;asc&quot; }}     // 升序
+  ]
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h5 id="字段筛选-只返回需要的字段"><a href="#字段筛选-只返回需要的字段" class="header-anchor">#</a> 字段筛选（只返回需要的字段）</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 只返回名称、城市和成立时间
+GET /company/_search
+{
+  &quot;_source&quot;: [&quot;name&quot;, &quot;city&quot;, &quot;create_time&quot;], // 需返回的字段
+  &quot;query&quot;: { &quot;term&quot;: { &quot;city&quot;: &quot;广州市&quot; }}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h4 id="_4-4-7-聚合分析-实时统计与分析"><a href="#_4-4-7-聚合分析-实时统计与分析" class="header-anchor">#</a> 4.4.7 聚合分析：实时统计与分析</h4> <p>在搜索的同时对数据进行统计（如分组计数、平均值计算）。</p> <p>示例：按城市统计含「Java」的公司数量</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>GET /company/_search
+{
+  &quot;size&quot;: 0, // 不返回原始文档，只看聚合结果
+  &quot;query&quot;: { &quot;match&quot;: { &quot;name&quot;: &quot;Java&quot; }},
+  &quot;aggs&quot;: {
+    &quot;city_count&quot;: { // 自定义聚合名称
+      &quot;terms&quot;: {
+        &quot;field&quot;: &quot;city&quot;, // 按city（keyword类型）分组
+        &quot;size&quot;: 10 // 返回前10个城市
+      }
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>响应中 <code>aggregations.city_count.buckets</code> 会返回每个城市的公司数量。</p> <h4 id="_4-4-8-地理位置搜索-查找附近的文档"><a href="#_4-4-8-地理位置搜索-查找附近的文档" class="header-anchor">#</a> 4.4.8 地理位置搜索：查找附近的文档</h4> <p>基于 <code>geo_point</code> 字段，搜索指定位置周边的文档：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 搜索广州南站（22.9982, 113.3737）周边5公里内的公司
+GET /company/_search
+{
+  &quot;query&quot;: {
+    &quot;geo_distance&quot;: {
+      &quot;distance&quot;: &quot;5km&quot;, // 距离范围（支持 km/m 等单位）
+      &quot;address&quot;: &quot;22.9982, 113.3737&quot; // 中心点经纬度
+    }
+  }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h2 id="五、最佳实践与注意事项"><a href="#五、最佳实践与注意事项" class="header-anchor">#</a> 五、最佳实践与注意事项</h2> <ol><li><p><strong>索引设计</strong>：</p> <ul><li>合理选择字段类型（如无需全文搜索的字符串用 keyword）；</li> <li>避免过度设计（字段不宜过多）， Mapping 需提前规划。</li></ul></li> <li><p><strong>性能优化</strong>：</p> <ul><li>批量操作（用 <code>_bulk</code> API 批量增删改，减少请求次数）；</li> <li>避免深分页（<code>from + size</code> 不超过 10000，如需深分页用 <code>search_after</code>）；</li> <li>过滤条件优先用 <code>filter</code>（不影响评分，可缓存）。</li></ul></li> <li><p><strong>数据安全</strong>：</p> <ul><li>删除索引/文档前确认操作，建议先备份；</li> <li>生产环境开启索引副本（<code>number_of_replicas</code>），提高可用性。</li></ul></li> <li><p><strong>版本控制</strong>：</p> <ul><li>文档更新时可通过 <code>version</code> 字段实现乐观锁，避免并发冲突。</li></ul></li></ol></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/tavio-zhang/blog/edit/master/docs/《Elasticsearch》笔记/1.ES CRUD.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="tags"><a href="/tags/?tag=ES%20CRUD" title="标签">#ES CRUD</a></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2026/01/21, 19:29:14</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><!----> <a href="/pages/5113b6/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">ES分布式架构</div></a></div> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/pages/5113b6/">ES分布式架构</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/942d4b/"><div>
+            订单超时取消
+            <!----></div></a> <span class="date">01-21</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/87b303/"><div>
+            双 Token 登录
+            <!----></div></a> <span class="date">01-21</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/a3f3fd/"><div>
+            长短链接跳转
+            <!----></div></a> <span class="date">01-21</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:taviozhang@gmail.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/tavio-zhang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> <!----></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.c6ba13aa.js" defer></script><script src="/assets/js/2.8d9f533d.js" defer></script><script src="/assets/js/36.5c29dd6e.js" defer></script>
+  </body>
+</html>

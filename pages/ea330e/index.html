@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis缓存设计 | Tavio&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/img/logo.jpg">
+    <meta name="description" content="后端技术博客,别让自己落后于技术的迭代">
+    <meta name="keywords" content="鲜衣努码少年郎">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d594d45.css" as="style"><link rel="preload" href="/assets/js/app.c6ba13aa.js" as="script"><link rel="preload" href="/assets/js/2.8d9f533d.js" as="script"><link rel="preload" href="/assets/js/72.9ba26fc5.js" as="script"><link rel="prefetch" href="/assets/js/10.3c6e6522.js"><link rel="prefetch" href="/assets/js/11.09bc43b4.js"><link rel="prefetch" href="/assets/js/12.a996a87c.js"><link rel="prefetch" href="/assets/js/13.b02d3acf.js"><link rel="prefetch" href="/assets/js/14.64fd6e84.js"><link rel="prefetch" href="/assets/js/15.089c02a9.js"><link rel="prefetch" href="/assets/js/16.8fa236f4.js"><link rel="prefetch" href="/assets/js/17.a1730b7a.js"><link rel="prefetch" href="/assets/js/18.1335a425.js"><link rel="prefetch" href="/assets/js/19.9293cbc0.js"><link rel="prefetch" href="/assets/js/20.5d0fd1df.js"><link rel="prefetch" href="/assets/js/21.4319dddd.js"><link rel="prefetch" href="/assets/js/22.2d6d1193.js"><link rel="prefetch" href="/assets/js/23.f154e330.js"><link rel="prefetch" href="/assets/js/24.66ba0133.js"><link rel="prefetch" href="/assets/js/25.5979047a.js"><link rel="prefetch" href="/assets/js/26.04889c33.js"><link rel="prefetch" href="/assets/js/27.337928e8.js"><link rel="prefetch" href="/assets/js/28.665066df.js"><link rel="prefetch" href="/assets/js/29.5aa838b8.js"><link rel="prefetch" href="/assets/js/3.1aac6e80.js"><link rel="prefetch" href="/assets/js/30.a8923cf6.js"><link rel="prefetch" href="/assets/js/31.a290d548.js"><link rel="prefetch" href="/assets/js/32.cb2b7fdd.js"><link rel="prefetch" href="/assets/js/33.3286dca2.js"><link rel="prefetch" href="/assets/js/34.9aebb473.js"><link rel="prefetch" href="/assets/js/35.5777ff14.js"><link rel="prefetch" href="/assets/js/36.5c29dd6e.js"><link rel="prefetch" href="/assets/js/37.cbf6fde7.js"><link rel="prefetch" href="/assets/js/38.2a1572ab.js"><link rel="prefetch" href="/assets/js/39.000aacf6.js"><link rel="prefetch" href="/assets/js/4.16da1e3f.js"><link rel="prefetch" href="/assets/js/40.8fbbcfa8.js"><link rel="prefetch" href="/assets/js/41.1b995757.js"><link rel="prefetch" href="/assets/js/42.575e5238.js"><link rel="prefetch" href="/assets/js/43.0a4cb54f.js"><link rel="prefetch" href="/assets/js/44.8d3b4283.js"><link rel="prefetch" href="/assets/js/45.ae001bba.js"><link rel="prefetch" href="/assets/js/46.fc29dcb1.js"><link rel="prefetch" href="/assets/js/47.628ee1ef.js"><link rel="prefetch" href="/assets/js/48.7d4f854a.js"><link rel="prefetch" href="/assets/js/49.e848253a.js"><link rel="prefetch" href="/assets/js/5.20e9c2cf.js"><link rel="prefetch" href="/assets/js/50.045225be.js"><link rel="prefetch" href="/assets/js/51.d05a2035.js"><link rel="prefetch" href="/assets/js/52.35a2519d.js"><link rel="prefetch" href="/assets/js/53.ca8d5bc8.js"><link rel="prefetch" href="/assets/js/54.eb93e6ae.js"><link rel="prefetch" href="/assets/js/55.27ff3cca.js"><link rel="prefetch" href="/assets/js/56.4a98635a.js"><link rel="prefetch" href="/assets/js/57.db243c6d.js"><link rel="prefetch" href="/assets/js/58.650ffef2.js"><link rel="prefetch" href="/assets/js/59.9af578d0.js"><link rel="prefetch" href="/assets/js/6.cf5ce51d.js"><link rel="prefetch" href="/assets/js/60.800afb74.js"><link rel="prefetch" href="/assets/js/61.59b23cca.js"><link rel="prefetch" href="/assets/js/62.35998712.js"><link rel="prefetch" href="/assets/js/63.824df362.js"><link rel="prefetch" href="/assets/js/64.2f51e9d0.js"><link rel="prefetch" href="/assets/js/65.926e2499.js"><link rel="prefetch" href="/assets/js/66.2af85da2.js"><link rel="prefetch" href="/assets/js/67.bbd8d4b3.js"><link rel="prefetch" href="/assets/js/68.163c774f.js"><link rel="prefetch" href="/assets/js/69.deed8d29.js"><link rel="prefetch" href="/assets/js/7.92776da2.js"><link rel="prefetch" href="/assets/js/70.d6a81068.js"><link rel="prefetch" href="/assets/js/71.9adb8c50.js"><link rel="prefetch" href="/assets/js/73.c3ee5d2f.js"><link rel="prefetch" href="/assets/js/74.af7973c7.js"><link rel="prefetch" href="/assets/js/75.ed8e7990.js"><link rel="prefetch" href="/assets/js/76.668519a5.js"><link rel="prefetch" href="/assets/js/77.d6cb2694.js"><link rel="prefetch" href="/assets/js/78.494cff39.js"><link rel="prefetch" href="/assets/js/79.486534af.js"><link rel="prefetch" href="/assets/js/8.d7fc67a9.js"><link rel="prefetch" href="/assets/js/80.c60f84eb.js"><link rel="prefetch" href="/assets/js/81.80ab610c.js"><link rel="prefetch" href="/assets/js/82.38a483d0.js"><link rel="prefetch" href="/assets/js/83.72b7d6a4.js"><link rel="prefetch" href="/assets/js/84.f5a347be.js"><link rel="prefetch" href="/assets/js/85.f3b7b32b.js"><link rel="prefetch" href="/assets/js/86.1d47bd30.js"><link rel="prefetch" href="/assets/js/87.2361eddb.js"><link rel="prefetch" href="/assets/js/88.aef9e475.js"><link rel="prefetch" href="/assets/js/89.0a95e3be.js"><link rel="prefetch" href="/assets/js/9.f6c9df9a.js"><link rel="prefetch" href="/assets/js/90.ddf7b632.js"><link rel="prefetch" href="/assets/js/91.2a96bacf.js"><link rel="prefetch" href="/assets/js/92.f61fc5ec.js"><link rel="prefetch" href="/assets/js/93.40a17799.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d594d45.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.jpg" alt="Tavio's blog" class="logo"> <span class="site-name can-hide">Tavio's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><a href="/java/" class="link-title">Java</a> <span class="title" style="display:none;">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/node/jvm/" class="nav-link">JVM底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/thread/" class="nav-link">邪恶多线程</a></li><li class="dropdown-item"><!----> <a href="/node/mybatis/" class="nav-link">MyBatis底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/spring/" class="nav-link">Spring底层原理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/db/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/mysql/" class="nav-link">MySQL的优化之路</a></li><li class="dropdown-item"><!----> <a href="/note/clickhouse/" class="nav-link">ClickHouse的高性能</a></li><li class="dropdown-item"><!----> <a href="/note/redis/" class="nav-link">Redis的快速查询</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/rabbitmq/" class="nav-link">RabbitMQ的生产</a></li><li class="dropdown-item"><!----> <a href="/note/kafka/" class="nav-link">Kafka的高吞吐量</a></li><li class="dropdown-item"><!----> <a href="/note/es/" class="nav-link">ES的入门到入坑</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="实践" class="dropdown-title"><a href="/practice/" class="link-title">实践</a> <span class="title" style="display:none;">实践</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/284351/" class="nav-link">MySQL自增ID主键空洞</a></li><li class="dropdown-item"><!----> <a href="/pages/8f1df0/" class="nav-link">前端实现长整型排序</a></li><li class="dropdown-item"><!----> <a href="/pages/13fcc3/" class="nav-link">MySQL无感换表</a></li><li class="dropdown-item"><!----> <a href="/pages/69e163/" class="nav-link">Redis延时双删</a></li><li class="dropdown-item"><!----> <a href="/pages/f43494/" class="nav-link">高并发秒杀优惠卷</a></li><li class="dropdown-item"><!----> <a href="/pages/ab9a49/" class="nav-link">AOP无侵入式告警</a></li><li class="dropdown-item"><!----> <a href="/pages/a3f3fd/" class="nav-link">长短链接跳转</a></li><li class="dropdown-item"><!----> <a href="/pages/942d4b/" class="nav-link">订单超时取消</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/tavio-zhang/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.jpg"> <div class="blogger-info"><h3>Tavio Zhang</h3> <span>努力学习的小码喽</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java" class="dropdown-title"><a href="/java/" class="link-title">Java</a> <span class="title" style="display:none;">Java</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/node/jvm/" class="nav-link">JVM底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/thread/" class="nav-link">邪恶多线程</a></li><li class="dropdown-item"><!----> <a href="/node/mybatis/" class="nav-link">MyBatis底层原理</a></li><li class="dropdown-item"><!----> <a href="/node/spring/" class="nav-link">Spring底层原理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/db/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/mysql/" class="nav-link">MySQL的优化之路</a></li><li class="dropdown-item"><!----> <a href="/note/clickhouse/" class="nav-link">ClickHouse的高性能</a></li><li class="dropdown-item"><!----> <a href="/note/redis/" class="nav-link">Redis的快速查询</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/note/rabbitmq/" class="nav-link">RabbitMQ的生产</a></li><li class="dropdown-item"><!----> <a href="/note/kafka/" class="nav-link">Kafka的高吞吐量</a></li><li class="dropdown-item"><!----> <a href="/note/es/" class="nav-link">ES的入门到入坑</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="实践" class="dropdown-title"><a href="/practice/" class="link-title">实践</a> <span class="title" style="display:none;">实践</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/284351/" class="nav-link">MySQL自增ID主键空洞</a></li><li class="dropdown-item"><!----> <a href="/pages/8f1df0/" class="nav-link">前端实现长整型排序</a></li><li class="dropdown-item"><!----> <a href="/pages/13fcc3/" class="nav-link">MySQL无感换表</a></li><li class="dropdown-item"><!----> <a href="/pages/69e163/" class="nav-link">Redis延时双删</a></li><li class="dropdown-item"><!----> <a href="/pages/f43494/" class="nav-link">高并发秒杀优惠卷</a></li><li class="dropdown-item"><!----> <a href="/pages/ab9a49/" class="nav-link">AOP无侵入式告警</a></li><li class="dropdown-item"><!----> <a href="/pages/a3f3fd/" class="nav-link">长短链接跳转</a></li><li class="dropdown-item"><!----> <a href="/pages/942d4b/" class="nav-link">订单超时取消</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/tavio-zhang/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/pages/eada73/" class="sidebar-link">Redis核心数据结构</a></li><li><a href="/pages/d81738/" class="sidebar-link">Redis持久化机制</a></li><li><a href="/pages/797c36/" class="sidebar-link">Redis高可用架构</a></li><li><a href="/pages/88227a/" class="sidebar-link">Redis分布式锁</a></li><li><a href="/pages/ea330e/" aria-current="page" class="active sidebar-link">Redis缓存设计</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#一、核心问题定义与本质区别" class="sidebar-link">一、核心问题定义与本质区别</a></li><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#二、缓存穿透-无效请求的防护方案" class="sidebar-link">二、缓存穿透：无效请求的防护方案</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_2-1-解决方案1-接口参数校验-第一道防线" class="sidebar-link">2.1 解决方案1：接口参数校验（第一道防线）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例" class="sidebar-link">代码示例</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_2-2-解决方案2-缓存空值-简单有效-中小场景首选" class="sidebar-link">2.2 解决方案2：缓存空值（简单有效，中小场景首选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-2" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-java-redistemplate" class="sidebar-link">代码示例（Java + RedisTemplate）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_2-3-解决方案3-布隆过滤器-大数据量-高并发场景首选" class="sidebar-link">2.3 解决方案3：布隆过滤器（大数据量/高并发场景首选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#核心特性" class="sidebar-link">核心特性</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现方式-redisbloom模块-生产环境推荐" class="sidebar-link">实现方式：RedisBloom模块（生产环境推荐）</a></li><li class="sidebar-sub-header level5"><a href="/pages/ea330e/#步骤1-安装redisbloom模块" class="sidebar-link">步骤1：安装RedisBloom模块</a></li><li class="sidebar-sub-header level5"><a href="/pages/ea330e/#步骤2-核心代码实现-java" class="sidebar-link">步骤2：核心代码实现（Java）</a></li><li class="sidebar-sub-header level5"><a href="/pages/ea330e/#误判率与内存占用参考" class="sidebar-link">误判率与内存占用参考</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_2-4-缓存穿透方案组合建议" class="sidebar-link">2.4 缓存穿透方案组合建议</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#三、缓存击穿-热点key的防护方案" class="sidebar-link">三、缓存击穿：热点key的防护方案</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_3-1-解决方案1-互斥锁-通用场景首选" class="sidebar-link">3.1 解决方案1：互斥锁（通用场景首选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-3" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-java-redisson" class="sidebar-link">代码示例（Java + Redisson）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_3-2-解决方案2-热点key永不过期-超高并发场景首选" class="sidebar-link">3.2 解决方案2：热点key永不过期（超高并发场景首选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#方式1-物理永不过期-更新频率极低场景" class="sidebar-link">方式1：物理永不过期（更新频率极低场景）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#方式2-逻辑永不过期-更新频率中等场景" class="sidebar-link">方式2：逻辑永不过期（更新频率中等场景）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-逻辑永不过期" class="sidebar-link">代码示例（逻辑永不过期）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_3-3-解决方案3-逻辑过期-异步刷新-用户体验优先" class="sidebar-link">3.3 解决方案3：逻辑过期+异步刷新（用户体验优先）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-4" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-2" class="sidebar-link">代码示例</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_3-4-缓存击穿方案组合建议" class="sidebar-link">3.4 缓存击穿方案组合建议</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#四、缓存雪崩-大规模失效的防护方案" class="sidebar-link">四、缓存雪崩：大规模失效的防护方案</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-1-解决方案1-过期时间随机化-基础方案-必选" class="sidebar-link">4.1 解决方案1：过期时间随机化（基础方案，必选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-5" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-3" class="sidebar-link">代码示例</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-2-解决方案2-多级缓存架构-提升可用性-推荐" class="sidebar-link">4.2 解决方案2：多级缓存架构（提升可用性，推荐）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-6" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-caffeine-redis" class="sidebar-link">代码示例（Caffeine + Redis）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-3-解决方案3-熔断降级与限流-保护数据库-兜底" class="sidebar-link">4.3 解决方案3：熔断降级与限流（保护数据库，兜底）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现示例-sentinel限流-熔断" class="sidebar-link">实现示例（Sentinel限流 + 熔断）</a></li><li class="sidebar-sub-header level5"><a href="/pages/ea330e/#步骤1-添加依赖" class="sidebar-link">步骤1：添加依赖</a></li><li class="sidebar-sub-header level5"><a href="/pages/ea330e/#步骤2-配置限流规则与降级逻辑" class="sidebar-link">步骤2：配置限流规则与降级逻辑</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-4-解决方案4-缓存高可用部署-避免单点故障-必选" class="sidebar-link">4.4 解决方案4：缓存高可用部署（避免单点故障，必选）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#redis-cluster-配置示例-spring-boot" class="sidebar-link">Redis Cluster 配置示例（Spring Boot）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-5-解决方案5-缓存预热-避免冷启动-推荐" class="sidebar-link">4.5 解决方案5：缓存预热（避免冷启动，推荐）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#实现要点-7" class="sidebar-link">实现要点</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#代码示例-spring-boot-启动预热" class="sidebar-link">代码示例（Spring Boot 启动预热）</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_4-6-缓存雪崩方案组合建议" class="sidebar-link">4.6 缓存雪崩方案组合建议</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#五、实战最佳实践与监控告警" class="sidebar-link">五、实战最佳实践与监控告警</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_5-1-核心参数配置参考" class="sidebar-link">5.1 核心参数配置参考</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_5-2-数据一致性保障" class="sidebar-link">5.2 数据一致性保障</a></li><li class="sidebar-sub-header level3"><a href="/pages/ea330e/#_5-3-监控告警体系-提前预警" class="sidebar-link">5.3 监控告警体系（提前预警）</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#核心监控指标" class="sidebar-link">核心监控指标</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#监控工具组合" class="sidebar-link">监控工具组合</a></li><li class="sidebar-sub-header level4"><a href="/pages/ea330e/#关键告警规则" class="sidebar-link">关键告警规则</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/ea330e/#六、总结" class="sidebar-link">六、总结</a></li></ul></li><li><a href="/pages/d2662c/" class="sidebar-link">Redis大Key与热Key</a></li><li><a href="/pages/dd29df/" class="sidebar-link">Redis限流</a></li><li><a href="/pages/aeefc4/" class="sidebar-link">Redis IO多路复用</a></li><li><a href="/pages/347bce/" class="sidebar-link">Redis过期删除策略</a></li><li><a href="/pages/390684/" class="sidebar-link">Redis Bitmap</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-06225672><div class="articleInfo" data-v-06225672><ul class="breadcrumbs" data-v-06225672><li data-v-06225672><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-06225672></a></li> <li data-v-06225672><a href="/note/redis/#《Redis》笔记" data-v-06225672>《Redis》笔记</a></li></ul> <div class="info" data-v-06225672><div title="作者" class="author iconfont icon-touxiang" data-v-06225672><a href="https://github.com/tavio-zhang" target="_blank" title="作者" class="beLink" data-v-06225672>Tavio</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-06225672><a href="javascript:;" data-v-06225672>2023-04-27</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">Redis缓存设计<!----></h1>  <div class="theme-vdoing-content content__default"><p>在高并发系统中，Redis 作为核心缓存组件，能显著降低数据库压力、提升响应速度。但不合理的缓存设计易引发 <strong>穿透、击穿、雪崩</strong> 三大典型问题，可能导致数据库宕机、系统雪崩。</p> <h2 id="一、核心问题定义与本质区别"><a href="#一、核心问题定义与本质区别" class="header-anchor">#</a> 一、核心问题定义与本质区别</h2> <p>三大问题均源于“缓存未命中”，但触发场景、影响范围截然不同，需精准区分：</p> <table><thead><tr><th>问题类型</th> <th>定义</th> <th>本质</th> <th>典型场景</th> <th>影响程度</th></tr></thead> <tbody><tr><td>缓存穿透</td> <td>频繁请求“不存在的数据”，缓存无数据，请求直达数据库</td> <td>缓存对“无效key”无防护，形成“缓存真空”</td> <td>恶意攻击（遍历不存在的ID）、业务误操作（查询非法参数）</td> <td>中等（持续消耗DB资源）</td></tr> <tr><td>缓存击穿</td> <td>热点key突然过期，瞬间大量并发请求未命中缓存，全部穿透到数据库</td> <td>热点key“失效时间点”与“高并发请求”重叠，形成流量尖峰</td> <td>秒杀商品缓存过期、热门文章缓存失效</td> <td>高（瞬间压垮DB）</td></tr> <tr><td>缓存雪崩</td> <td>大量key同时过期，或缓存服务宕机，导致所有请求穿透到数据库</td> <td>缓存层整体失效，流量集中冲击数据库</td> <td>整点批量设置缓存过期、Redis 单点故障宕机</td> <td>致命（系统整体雪崩）</td></tr></tbody></table> <h2 id="二、缓存穿透-无效请求的防护方案"><a href="#二、缓存穿透-无效请求的防护方案" class="header-anchor">#</a> 二、缓存穿透：无效请求的防护方案</h2> <p>缓存穿透的核心是“无效key绕过缓存”，解决方案围绕“拦截无效请求”“填补缓存真空”展开，推荐三级防护体系，按需组合使用。</p> <h3 id="_2-1-解决方案1-接口参数校验-第一道防线"><a href="#_2-1-解决方案1-接口参数校验-第一道防线" class="header-anchor">#</a> 2.1 解决方案1：接口参数校验（第一道防线）</h3> <p><strong>核心原理</strong>：在请求抵达缓存/数据库前，通过业务规则拦截非法参数，从源头阻断无效请求，成本最低、见效最快。</p> <h4 id="实现要点"><a href="#实现要点" class="header-anchor">#</a> 实现要点</h4> <ul><li>校验参数合法性：如用户ID、商品ID需为正整数，避免 <code>-1</code>、<code>0</code>、字符串等非法值。</li> <li>限制查询范围：如时间范围不能超过3个月，分页查询页码不超过1000页。</li> <li>黑名单拦截：维护恶意请求黑名单（如频繁查询无效ID的IP），直接拒绝。</li></ul> <h4 id="代码示例"><a href="#代码示例" class="header-anchor">#</a> 代码示例</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>/**
+ * 商品查询接口参数校验
+ */
+@RestController
+@RequestMapping(&quot;/goods&quot;)
+public class GoodsController {
+
+    @Autowired
+    private GoodsService goodsService;
+
+    @GetMapping(&quot;/{id}&quot;)
+    public Result&lt;Goods&gt; getGoods(@PathVariable Long id) {
+        // 1. 基础参数校验：拦截非法ID
+        if (id == null || id &lt;= 0) {
+            return Result.fail(&quot;商品ID必须为正整数&quot;);
+        }
+        // 2. 范围校验：假设商品ID最大为100万
+        if (id &gt; 1000000) {
+            return Result.fail(&quot;商品ID超出合法范围&quot;);
+        }
+        // 3. 后续执行缓存查询逻辑
+        return goodsService.getGoodsById(id);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="_2-2-解决方案2-缓存空值-简单有效-中小场景首选"><a href="#_2-2-解决方案2-缓存空值-简单有效-中小场景首选" class="header-anchor">#</a> 2.2 解决方案2：缓存空值（简单有效，中小场景首选）</h3> <p><strong>核心原理</strong>：当数据库返回空结果时，在Redis中缓存“空值标记”并设置短期过期时间。后续请求会命中空值缓存，不再访问数据库，快速拦截无效请求。</p> <h4 id="实现要点-2"><a href="#实现要点-2" class="header-anchor">#</a> 实现要点</h4> <ul><li>空值需设置短期过期时间（5~10分钟）：避免真实数据新增后，缓存空值导致查询不到（数据一致性兜底）。</li> <li>自定义<code>NullValue</code>标记类：避免与Redis默认不存储<code>null</code>的特性冲突，同时区分“真实空数据”和“缓存空标记”。</li> <li>结合参数校验使用：减少无效空值缓存的存储压力。</li></ul> <h4 id="代码示例-java-redistemplate"><a href="#代码示例-java-redistemplate" class="header-anchor">#</a> 代码示例（Java + RedisTemplate）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Service
+public class GoodsService {
+
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+    @Autowired
+    private GoodsMapper goodsMapper;
+
+    // 空值缓存过期时间：5分钟
+    private static final long NULL_CACHE_EXPIRE = 5;
+    // 正常数据缓存过期时间：30分钟
+    private static final long NORMAL_CACHE_EXPIRE = 30;
+
+    public Goods getGoodsById(Long id) {
+        String cacheKey = &quot;goods:id:&quot; + id;
+
+        // 1. 先查缓存
+        Object cacheValue = redisTemplate.opsForValue().get(cacheKey);
+        if (cacheValue != null) {
+            // 命中空值标记，直接返回null
+            if (cacheValue instanceof NullValue) {
+                return null;
+            }
+            // 命中正常数据，直接返回
+            return (Goods) cacheValue;
+        }
+
+        // 2. 缓存未命中，查询数据库
+        Goods goods = goodsMapper.selectById(id);
+        if (goods == null) {
+            // 3. 数据库无数据：缓存空值标记
+            redisTemplate.opsForValue().set(
+                cacheKey, 
+                new NullValue(), 
+                NULL_CACHE_EXPIRE, 
+                TimeUnit.MINUTES
+            );
+            return null;
+        }
+
+        // 4. 数据库有数据：缓存真实值
+        redisTemplate.opsForValue().set(
+            cacheKey, 
+            goods, 
+            NORMAL_CACHE_EXPIRE, 
+            TimeUnit.MINUTES
+        );
+        return goods;
+    }
+
+    // 自定义空值标记类（需序列化）
+    public static class NullValue implements Serializable {
+        private static final long serialVersionUID = 1L;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div></div><h3 id="_2-3-解决方案3-布隆过滤器-大数据量-高并发场景首选"><a href="#_2-3-解决方案3-布隆过滤器-大数据量-高并发场景首选" class="header-anchor">#</a> 2.3 解决方案3：布隆过滤器（大数据量/高并发场景首选）</h3> <p><strong>核心原理</strong>：布隆过滤器是概率性数据结构，通过“位数组+多个哈希函数”快速判断“元素是否可能存在于集合中”。不存在则直接返回，存在则走正常缓存流程，从根源拦截无效key。</p> <h4 id="核心特性"><a href="#核心特性" class="header-anchor">#</a> 核心特性</h4> <table><thead><tr><th>优点</th> <th>缺点</th></tr></thead> <tbody><tr><td>空间利用率极高（以bit为单位存储）</td> <td>存在误判率（无法完全避免穿透，需兜底）</td></tr> <tr><td>查询速度快（O(k)，k为哈希函数数量）</td> <td>不支持删除数据（需定期重建）</td></tr> <tr><td>支持海量数据（百万级元素仅需几MB内存）</td> <td>需提前初始化合法数据集合</td></tr></tbody></table> <h4 id="实现方式-redisbloom模块-生产环境推荐"><a href="#实现方式-redisbloom模块-生产环境推荐" class="header-anchor">#</a> 实现方式：RedisBloom模块（生产环境推荐）</h4> <p>RedisBloom是Redis的官方扩展模块，原生支持布隆过滤器，无需手动实现复杂逻辑。</p> <h5 id="步骤1-安装redisbloom模块"><a href="#步骤1-安装redisbloom模块" class="header-anchor">#</a> 步骤1：安装RedisBloom模块</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code># 1. 下载RedisBloom模块（GitHub：https://github.com/RedisBloom/RedisBloom）
+# 2. 启动Redis时加载模块
+redis-server --loadmodule /path/to/redisbloom.so
+# 或在redis.conf中配置（永久生效）
+loadmodule /path/to/redisbloom.so
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h5 id="步骤2-核心代码实现-java"><a href="#步骤2-核心代码实现-java" class="header-anchor">#</a> 步骤2：核心代码实现（Java）</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Service
+public class BloomFilterService {
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    // 布隆过滤器名称（存储所有合法商品ID）
+    private static final String BLOOM_FILTER_KEY = &quot;bloom:filter:goods_ids&quot;;
+    // 预期元素数量（100万）
+    private static final long EXPECTED_SIZE = 1000000;
+    // 误判率（1%，根据业务调整）
+    private static final double FALSE_POSITIVE_RATE = 0.01;
+
+    // 初始化布隆过滤器（系统启动时执行）
+    @PostConstruct
+    public void initBloomFilter() {
+        // 检查过滤器是否已存在，不存在则创建
+        Boolean exists = redisTemplate.hasKey(BLOOM_FILTER_KEY);
+        if (Boolean.FALSE.equals(exists)) {
+            // 执行bf.reserve命令：创建布隆过滤器
+            redisTemplate.execute(
+                new DefaultRedisScript&lt;&gt;(
+                    &quot;return bf.reserve(KEYS[1], ARGV[1], ARGV[2])&quot;,
+                    String.class
+                ),
+                Collections.singletonList(BLOOM_FILTER_KEY),
+                String.valueOf(FALSE_POSITIVE_RATE),
+                String.valueOf(EXPECTED_SIZE)
+            );
+            // 批量添加合法商品ID（从数据库查询所有有效ID）
+            List&lt;Long&gt; validGoodsIds = goodsMapper.selectAllValidIds();
+            for (Long id : validGoodsIds) {
+                addToBloomFilter(id.toString());
+            }
+            log.info(&quot;布隆过滤器初始化完成，加载合法商品ID {} 个&quot;, validGoodsIds.size());
+        }
+    }
+
+    // 新增商品时，同步添加到布隆过滤器
+    public void addToBloomFilter(String value) {
+        redisTemplate.execute(
+            new DefaultRedisScript&lt;&gt;(&quot;return bf.add(KEYS[1], ARGV[1])&quot;, Long.class),
+            Collections.singletonList(BLOOM_FILTER_KEY),
+            value
+        );
+    }
+
+    // 判断元素是否可能存在（存在返回true，不存在返回false）
+    public boolean mightContain(String value) {
+        Long result = redisTemplate.execute(
+            new DefaultRedisScript&lt;&gt;(&quot;return bf.exists(KEYS[1], ARGV[1])&quot;, Long.class),
+            Collections.singletonList(BLOOM_FILTER_KEY),
+            value
+        );
+        return result != null &amp;&amp; result == 1;
+    }
+}
+
+// 业务层整合布隆过滤器
+@Service
+public class GoodsService {
+
+    @Autowired
+    private BloomFilterService bloomFilterService;
+
+    public Goods getGoodsById(Long id) {
+        String cacheKey = &quot;goods:id:&quot; + id;
+        String bloomValue = id.toString();
+
+        // 1. 布隆过滤器拦截：不存在则直接返回（第一道拦截）
+        if (!bloomFilterService.mightContain(bloomValue)) {
+            log.info(&quot;布隆过滤器拦截无效商品ID：{}&quot;, id);
+            return null;
+        }
+
+        // 2. 查询缓存（第二道拦截，处理布隆误判）
+        Object cacheValue = redisTemplate.opsForValue().get(cacheKey);
+        if (cacheValue != null) {
+            return cacheValue instanceof NullValue ? null : (Goods) cacheValue;
+        }
+
+        // 3. 查询数据库并缓存结果（省略，同缓存空值方案）
+        return queryDbAndCacheResult(id, cacheKey);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br></div></div><h5 id="误判率与内存占用参考"><a href="#误判率与内存占用参考" class="header-anchor">#</a> 误判率与内存占用参考</h5> <table><thead><tr><th>预期元素数量</th> <th>误判率</th> <th>内存占用（约）</th></tr></thead> <tbody><tr><td>10万</td> <td>0.01%</td> <td>190KB</td></tr> <tr><td>100万</td> <td>0.01%</td> <td>1.8MB</td></tr> <tr><td>1000万</td> <td>0.01%</td> <td>18MB</td></tr> <tr><td>1000万</td> <td>1%</td> <td>12MB</td></tr></tbody></table> <h3 id="_2-4-缓存穿透方案组合建议"><a href="#_2-4-缓存穿透方案组合建议" class="header-anchor">#</a> 2.4 缓存穿透方案组合建议</h3> <ul><li>中小场景：接口参数校验 + 缓存空值（低成本、易实现）。</li> <li>大数据量/高并发场景：接口参数校验 + 布隆过滤器 + 缓存空值（三重防护，零穿透）。</li></ul> <h2 id="三、缓存击穿-热点key的防护方案"><a href="#三、缓存击穿-热点key的防护方案" class="header-anchor">#</a> 三、缓存击穿：热点key的防护方案</h2> <p>缓存击穿的核心是“热点key失效瞬间的并发冲击”，解决方案围绕“避免热点key失效”“控制并发查询”展开，优先保证高可用和用户体验。</p> <h3 id="_3-1-解决方案1-互斥锁-通用场景首选"><a href="#_3-1-解决方案1-互斥锁-通用场景首选" class="header-anchor">#</a> 3.1 解决方案1：互斥锁（通用场景首选）</h3> <p><strong>核心原理</strong>：缓存失效时，仅允许一个线程获取锁查询数据库并更新缓存，其他线程等待重试，避免大量并发请求直接打数据库。</p> <h4 id="实现要点-3"><a href="#实现要点-3" class="header-anchor">#</a> 实现要点</h4> <ul><li>锁粒度：按热点key维度加锁（如<code>lock:goods:1001</code>），避免全局锁降低并发。</li> <li>锁过期时间：需大于“数据库查询+缓存更新”的总耗时（推荐3~5秒），避免锁提前释放导致并发问题。</li> <li>重试策略：非阻塞重试（最多5次，间隔100~200ms），避免线程长期阻塞。</li> <li>锁释放：必须在<code>finally</code>块中释放，且仅释放当前线程持有的锁。</li></ul> <h4 id="代码示例-java-redisson"><a href="#代码示例-java-redisson" class="header-anchor">#</a> 代码示例（Java + Redisson）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Service
+public class GoodsService {
+
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private RedissonClient redissonClient;
+
+    // 锁前缀（按key维度加锁）
+    private static final String LOCK_PREFIX = &quot;lock:goods:&quot;;
+    // 缓存过期时间（30分钟）
+    private static final long CACHE_EXPIRE = 30;
+    // 锁过期时间（3秒，需大于DB查询+缓存更新耗时）
+    private static final long LOCK_EXPIRE = 3;
+    // 最大重试次数
+    private static final int MAX_RETRY = 5;
+    // 重试间隔（100ms）
+    private static final long RETRY_INTERVAL = 100;
+
+    public Goods getGoodsById(Long id) {
+        String cacheKey = &quot;goods:id:&quot; + id;
+        String lockKey = LOCK_PREFIX + id;
+
+        // 1. 先查缓存：命中直接返回
+        Goods goods = (Goods) redisTemplate.opsForValue().get(cacheKey);
+        if (goods != null) {
+            return goods;
+        }
+
+        // 2. 缓存失效，获取互斥锁
+        RLock lock = redissonClient.getLock(lockKey);
+        try {
+            // 尝试获取锁：非阻塞（最多等待0秒），锁3秒后自动释放
+            boolean locked = lock.tryLock(0, LOCK_EXPIRE, TimeUnit.SECONDS);
+            if (locked) {
+                // 3. 获锁成功：查询数据库（双重检查缓存，避免锁等待期间缓存已更新）
+                goods = (Goods) redisTemplate.opsForValue().get(cacheKey);
+                if (goods != null) {
+                    return goods;
+                }
+                // 数据库查询
+                goods = goodsMapper.selectById(id);
+                if (goods == null) {
+                    // 数据库无数据：缓存空值（5分钟）
+                    redisTemplate.opsForValue().set(
+                        cacheKey, 
+                        new NullValue(), 
+                        5, 
+                        TimeUnit.MINUTES
+                    );
+                    return null;
+                }
+                // 数据库有数据：更新缓存
+                redisTemplate.opsForValue().set(
+                    cacheKey, 
+                    goods, 
+                    CACHE_EXPIRE, 
+                    TimeUnit.MINUTES
+                );
+                return goods;
+            } else {
+                // 4. 获锁失败：重试（最多5次）
+                int retryCount = 0;
+                while (retryCount &lt; MAX_RETRY) {
+                    Thread.sleep(RETRY_INTERVAL);
+                    goods = (Goods) redisTemplate.opsForValue().get(cacheKey);
+                    if (goods != null) {
+                        return goods;
+                    }
+                    retryCount++;
+                }
+                // 重试失败：返回兜底数据（保证用户体验）
+                return buildFallbackGoods(id);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return buildFallbackGoods(id);
+        } finally {
+            // 5. 释放锁（仅释放当前线程持有的锁）
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+    }
+
+    // 构建兜底数据
+    private Goods buildFallbackGoods(Long id) {
+        Goods fallback = new Goods();
+        fallback.setId(id);
+        fallback.setName(&quot;系统繁忙，请稍后再试&quot;);
+        fallback.setPrice(BigDecimal.ZERO);
+        return fallback;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br></div></div><h3 id="_3-2-解决方案2-热点key永不过期-超高并发场景首选"><a href="#_3-2-解决方案2-热点key永不过期-超高并发场景首选" class="header-anchor">#</a> 3.2 解决方案2：热点key永不过期（超高并发场景首选）</h3> <p><strong>核心原理</strong>：不让热点key自动过期，从根源上避免失效瞬间的并发冲击，分为“物理永不过期”和“逻辑永不过期”两种方式。</p> <h4 id="方式1-物理永不过期-更新频率极低场景"><a href="#方式1-物理永不过期-更新频率极低场景" class="header-anchor">#</a> 方式1：物理永不过期（更新频率极低场景）</h4> <ul><li>实现：缓存不设置<code>EXPIRE</code>时间，热点数据永久存储在Redis中。</li> <li>数据更新：数据库更新后，手动调用<code>SET</code>命令覆盖缓存（如通过消息队列异步更新）。</li> <li>适用场景：首页Banner、固定配置、更新频率极低的热点数据（如年度爆款商品）。</li></ul> <h4 id="方式2-逻辑永不过期-更新频率中等场景"><a href="#方式2-逻辑永不过期-更新频率中等场景" class="header-anchor">#</a> 方式2：逻辑永不过期（更新频率中等场景）</h4> <ul><li>实现：缓存设置物理过期时间（如30分钟），同时启动后台异步线程，定期（如29分钟）更新过期时间，保证“逻辑上不过期”。</li> <li>优势：兼顾可用性和数据一致性，即使后台线程故障，物理过期时间仍能兜底。</li></ul> <h4 id="代码示例-逻辑永不过期"><a href="#代码示例-逻辑永不过期" class="header-anchor">#</a> 代码示例（逻辑永不过期）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Service
+public class HotKeyRefreshService {
+
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+
+    // 热点key列表（可从配置中心/数据库动态获取）
+    private static final List&lt;String&gt; HOT_KEYS = Arrays.asList(
+        &quot;goods:id:1001&quot;, &quot;goods:id:1002&quot;, &quot;goods:id:1003&quot;
+    );
+
+    // 定时任务：每29分钟刷新一次过期时间（Spring Schedule）
+    @Scheduled(fixedRate = 29 * 60 * 1000)
+    @Async // 异步执行，避免阻塞主线程
+    public void refreshHotKeyExpire() {
+        log.info(&quot;开始刷新热点key过期时间&quot;);
+        for (String key : HOT_KEYS) {
+            // 检查key是否存在，存在则延长过期时间至30分钟
+            Boolean exists = redisTemplate.hasKey(key);
+            if (Boolean.TRUE.equals(exists)) {
+                redisTemplate.expire(key, 30, TimeUnit.MINUTES);
+                log.info(&quot;刷新热点key：{} 过期时间至30分钟&quot;, key);
+            }
+        }
+    }
+}
+
+// 热点key存储逻辑
+public void cacheHotGoods(Goods goods) {
+    String cacheKey = &quot;goods:id:&quot; + goods.getId();
+    // 设置物理过期时间30分钟
+    redisTemplate.opsForValue().set(cacheKey, goods, 30, TimeUnit.MINUTES);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h3 id="_3-3-解决方案3-逻辑过期-异步刷新-用户体验优先"><a href="#_3-3-解决方案3-逻辑过期-异步刷新-用户体验优先" class="header-anchor">#</a> 3.3 解决方案3：逻辑过期+异步刷新（用户体验优先）</h3> <p><strong>核心原理</strong>：缓存存储“数据+逻辑过期时间”，即使物理过期，仍返回旧数据，同时异步线程后台更新缓存，兼顾可用性和数据新鲜度（无等待时间）。</p> <h4 id="实现要点-4"><a href="#实现要点-4" class="header-anchor">#</a> 实现要点</h4> <ul><li>缓存封装：自定义<code>CacheWrapper</code>类，包含真实数据和逻辑过期时间。</li> <li>物理过期时间：设为逻辑过期时间的2倍（兜底，避免缓存永久无效）。</li> <li>异步更新：逻辑过期后，返回旧数据，同时异步获取锁更新缓存，避免并发更新。</li></ul> <h4 id="代码示例-2"><a href="#代码示例-2" class="header-anchor">#</a> 代码示例</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 1. 封装缓存对象（含逻辑过期时间）
+@Data
+public class CacheWrapper&lt;T&gt; implements Serializable {
+    private T data; // 真实数据
+    private long logicExpireTime; // 逻辑过期时间（毫秒）
+
+    // 判断是否逻辑过期
+    public boolean isExpired() {
+        return System.currentTimeMillis() &gt; logicExpireTime;
+    }
+}
+
+// 2. 业务层实现
+@Service
+public class GoodsService {
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    public Goods getGoodsById(Long id) {
+        String cacheKey = &quot;goods:id:&quot; + id;
+        String lockKey = LOCK_PREFIX + id;
+
+        // 1. 查询缓存
+        CacheWrapper&lt;Goods&gt; cacheWrapper = (CacheWrapper&lt;Goods&gt;) redisTemplate.opsForValue().get(cacheKey);
+        if (cacheWrapper == null) {
+            // 缓存未命中：走互斥锁查询DB（同3.1方案，省略）
+            return queryDbWithLock(id, cacheKey);
+        }
+
+        Goods goods = cacheWrapper.getData();
+        // 2. 逻辑未过期：直接返回数据
+        if (!cacheWrapper.isExpired()) {
+            return goods;
+        }
+
+        // 3. 逻辑过期：返回旧数据，异步更新缓存（不阻塞用户）
+        CompletableFuture.runAsync(() -&gt; {
+            RLock lock = redissonClient.getLock(lockKey);
+            try {
+                // 尝试获取锁：非阻塞，避免并发更新
+                if (lock.tryLock(0, LOCK_EXPIRE, TimeUnit.SECONDS)) {
+                    log.info(&quot;异步更新热点key缓存：{}&quot;, cacheKey);
+                    // 查询最新数据
+                    Goods newGoods = goodsMapper.selectById(id);
+                    // 构建新缓存对象
+                    CacheWrapper&lt;Goods&gt; newWrapper = new CacheWrapper&lt;&gt;();
+                    newWrapper.setData(newGoods);
+                    // 逻辑过期时间：30分钟后
+                    newWrapper.setLogicExpireTime(System.currentTimeMillis() + 30 * 60 * 1000);
+                    // 物理过期时间：60分钟（兜底）
+                    redisTemplate.opsForValue().set(cacheKey, newWrapper, 60, TimeUnit.MINUTES);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error(&quot;异步更新缓存失败，key：{}&quot;, cacheKey, e);
+            } finally {
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
+            }
+        });
+
+        // 直接返回旧数据，保证用户体验
+        return goods;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br></div></div><h3 id="_3-4-缓存击穿方案组合建议"><a href="#_3-4-缓存击穿方案组合建议" class="header-anchor">#</a> 3.4 缓存击穿方案组合建议</h3> <ul><li>通用场景：互斥锁（兼顾一致性和并发）。</li> <li>超高并发场景：逻辑永不过期 + 异步刷新（优先保证可用性）。</li> <li>用户体验优先场景：逻辑过期 + 异步刷新（无等待时间）。</li></ul> <h2 id="四、缓存雪崩-大规模失效的防护方案"><a href="#四、缓存雪崩-大规模失效的防护方案" class="header-anchor">#</a> 四、缓存雪崩：大规模失效的防护方案</h2> <p>缓存雪崩的核心是“缓存层整体失效”，解决方案围绕“分散失效时间”“提升缓存可用性”“限制数据库压力”展开，构建多层防护体系。</p> <h3 id="_4-1-解决方案1-过期时间随机化-基础方案-必选"><a href="#_4-1-解决方案1-过期时间随机化-基础方案-必选" class="header-anchor">#</a> 4.1 解决方案1：过期时间随机化（基础方案，必选）</h3> <p><strong>核心原理</strong>：为每个缓存key设置“基础过期时间+随机偏移量”，避免大量key在同一时间点过期，分散流量峰值。</p> <h4 id="实现要点-5"><a href="#实现要点-5" class="header-anchor">#</a> 实现要点</h4> <ul><li>基础过期时间：根据数据热度设置（热数据24小时，温数据30分钟，冷数据10分钟）。</li> <li>随机偏移量：热数据偏移量大（1~2小时），冷数据偏移量小（5~10分钟），避免偏移后仍集中过期。</li> <li>代码封装：统一工具类生成随机过期时间，避免重复代码。</li></ul> <h4 id="代码示例-3"><a href="#代码示例-3" class="header-anchor">#</a> 代码示例</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Component
+public class CacheTtlUtil {
+
+    // 随机数生成器
+    private static final Random RANDOM = new Random();
+
+    /**
+     * 生成随机过期时间（秒）
+     * @param baseTtl 基础过期时间（秒）
+     * @param level 数据热度等级
+     * @return 随机过期时间（秒）
+     */
+    public int getRandomTtl(int baseTtl, HotspotLevel level) {
+        int randomRange = switch (level) {
+            case HIGH -&gt; 2 * 3600; // 热数据：0~2小时偏移
+            case MEDIUM -&gt; 3600; // 温数据：0~1小时偏移
+            case LOW -&gt; 600; // 冷数据：0~10分钟偏移
+        };
+        // 随机偏移量：0 ~ randomRange 秒
+        return baseTtl + RANDOM.nextInt(randomRange);
+    }
+
+    // 数据热度等级枚举
+    public enum HotspotLevel {
+        HIGH, MEDIUM, LOW
+    }
+}
+
+// 使用示例
+@Service
+public class GoodsService {
+
+    @Autowired
+    private CacheTtlUtil cacheTtlUtil;
+
+    public void cacheGoods(Goods goods, CacheTtlUtil.HotspotLevel level) {
+        String cacheKey = &quot;goods:id:&quot; + goods.getId();
+        // 基础过期时间：热数据24小时，温数据30分钟，冷数据10分钟
+        int baseTtl = switch (level) {
+            case HIGH -&gt; 24 * 3600;
+            case MEDIUM -&gt; 30 * 60;
+            case LOW -&gt; 10 * 60;
+        };
+        // 生成随机过期时间
+        int randomTtl = cacheTtlUtil.getRandomTtl(baseTtl, level);
+        // 缓存数据
+        redisTemplate.opsForValue().set(cacheKey, goods, randomTtl, TimeUnit.SECONDS);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br></div></div><h3 id="_4-2-解决方案2-多级缓存架构-提升可用性-推荐"><a href="#_4-2-解决方案2-多级缓存架构-提升可用性-推荐" class="header-anchor">#</a> 4.2 解决方案2：多级缓存架构（提升可用性，推荐）</h3> <p><strong>核心原理</strong>：构建“本地缓存（JVM）+ Redis”的二级缓存，即使Redis宕机，本地缓存仍能承接部分流量，避免缓存层整体失效。</p> <h4 id="实现要点-6"><a href="#实现要点-6" class="header-anchor">#</a> 实现要点</h4> <ul><li>本地缓存选型：推荐Caffeine（高性能、支持过期策略），避免使用HashMap（无过期和淘汰机制）。</li> <li>本地缓存配置：最大容量1~10万（避免占用过多JVM内存），过期时间2~5分钟（短于Redis缓存，保证数据一致性）。</li> <li>一致性保障：数据库更新时，先更新Redis，再删除本地缓存（或通过消息队列通知所有节点删除本地缓存）。</li></ul> <h4 id="代码示例-caffeine-redis"><a href="#代码示例-caffeine-redis" class="header-anchor">#</a> 代码示例（Caffeine + Redis）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 1. 配置本地缓存（Spring Boot）
+@Configuration
+public class CaffeineConfig {
+
+    @Bean
+    public Cache&lt;String, Object&gt; localCache() {
+        return Caffeine.newBuilder()
+                .maximumSize(10000) // 最大缓存数量（根据内存调整）
+                .expireAfterWrite(3, TimeUnit.MINUTES) // 本地缓存过期时间：3分钟
+                .recordStats() // 开启统计（可选）
+                .build();
+    }
+}
+
+// 2. 业务层实现二级缓存
+@Service
+public class GoodsService {
+
+    @Autowired
+    private Cache&lt;String, Object&gt; localCache;
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+
+    public Goods getGoodsById(Long id) {
+        String cacheKey = &quot;goods:id:&quot; + id;
+
+        // 1. 先查本地缓存（最快）
+        Object localValue = localCache.getIfPresent(cacheKey);
+        if (localValue != null) {
+            return localValue instanceof NullValue ? null : (Goods) localValue;
+        }
+
+        // 2. 再查Redis缓存
+        Object redisValue = redisTemplate.opsForValue().get(cacheKey);
+        if (redisValue != null) {
+            // 更新本地缓存（同步数据）
+            localCache.put(cacheKey, redisValue);
+            return redisValue instanceof NullValue ? null : (Goods) redisValue;
+        }
+
+        // 3. 最后查数据库并更新缓存（省略，同前）
+        Goods goods = queryDbAndCacheResult(id, cacheKey);
+        localCache.put(cacheKey, goods == null ? new NullValue() : goods);
+        return goods;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><h3 id="_4-3-解决方案3-熔断降级与限流-保护数据库-兜底"><a href="#_4-3-解决方案3-熔断降级与限流-保护数据库-兜底" class="header-anchor">#</a> 4.3 解决方案3：熔断降级与限流（保护数据库，兜底）</h3> <p><strong>核心原理</strong>：当Redis宕机或数据库压力过大时，通过熔断降级限制请求量，返回兜底数据，避免数据库被压垮。</p> <h4 id="实现示例-sentinel限流-熔断"><a href="#实现示例-sentinel限流-熔断" class="header-anchor">#</a> 实现示例（Sentinel限流 + 熔断）</h4> <h5 id="步骤1-添加依赖"><a href="#步骤1-添加依赖" class="header-anchor">#</a> 步骤1：添加依赖</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba.csp&lt;/groupId&gt;
+    &lt;artifactId&gt;sentinel-core&lt;/artifactId&gt;
+    &lt;version&gt;1.8.6&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba.csp&lt;/groupId&gt;
+    &lt;artifactId&gt;sentinel-annotation-aspectj&lt;/artifactId&gt;
+    &lt;version&gt;1.8.6&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h5 id="步骤2-配置限流规则与降级逻辑"><a href="#步骤2-配置限流规则与降级逻辑" class="header-anchor">#</a> 步骤2：配置限流规则与降级逻辑</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 1. 初始化Sentinel限流规则（系统启动时）
+@Configuration
+public class SentinelConfig {
+
+    @PostConstruct
+    public void initFlowRule() {
+        // 数据库查询接口限流规则：QPS上限1000（根据DB承载能力调整）
+        FlowRule flowRule = new FlowRule();
+        flowRule.setResource(&quot;goodsDbQuery&quot;); // 资源名（与@SentinelResource注解一致）
+        flowRule.setGrade(RuleConstant.FLOW_GRADE_QPS); // 按QPS限流
+        flowRule.setCount(1000); // QPS上限
+        FlowRuleManager.loadRules(Collections.singletonList(flowRule));
+
+        // 熔断规则：异常比例超过50%，熔断10秒
+        DegradeRule degradeRule = new DegradeRule();
+        degradeRule.setResource(&quot;goodsDbQuery&quot;);
+        degradeRule.setGrade(RuleConstant.DEGRADE_GRADE_EXCEPTION_RATIO);
+        degradeRule.setCount(0.5); // 异常比例阈值
+        degradeRule.setTimeWindow(10); // 熔断时间（秒）
+        DegradeRuleManager.loadRules(Collections.singletonList(degradeRule));
+    }
+}
+
+// 2. 业务层添加Sentinel注解
+@Service
+public class GoodsService {
+
+    @Autowired
+    private GoodsMapper goodsMapper;
+
+    // 数据库查询方法：添加限流和熔断注解
+    @SentinelResource(
+        value = &quot;goodsDbQuery&quot;,
+        fallback = &quot;dbQueryFallback&quot;, // 降级兜底方法
+        blockHandler = &quot;dbQueryBlockHandler&quot; // 限流阻塞处理方法
+    )
+    public Goods queryDb(Long id) {
+        return goodsMapper.selectById(id);
+    }
+
+    // 降级兜底方法（异常时触发）
+    public Goods dbQueryFallback(Long id, Throwable e) {
+        log.error(&quot;数据库查询异常，id:{}&quot;, id, e);
+        return buildFallbackGoods(id);
+    }
+
+    // 限流阻塞处理方法（QPS超限时触发）
+    public Goods dbQueryBlockHandler(Long id, BlockException e) {
+        log.error(&quot;数据库查询限流，id:{}&quot;, id, e);
+        return buildFallbackGoods(id);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br></div></div><h3 id="_4-4-解决方案4-缓存高可用部署-避免单点故障-必选"><a href="#_4-4-解决方案4-缓存高可用部署-避免单点故障-必选" class="header-anchor">#</a> 4.4 解决方案4：缓存高可用部署（避免单点故障，必选）</h3> <p><strong>核心方案</strong>：采用Redis Cluster或“主从+哨兵”架构，确保缓存服务无单点故障，即使部分节点宕机，仍能提供服务。</p> <table><thead><tr><th>部署方案</th> <th>架构说明</th> <th>优势</th> <th>适用场景</th> <th>部署成本</th></tr></thead> <tbody><tr><td>主从+哨兵</td> <td>1主N从，哨兵监控主节点，故障自动切换</td> <td>部署简单、成本低、兼容性好</td> <td>中小规模系统</td> <td>低</td></tr> <tr><td>Redis Cluster</td> <td>3主3从，数据自动分片，故障自愈</td> <td>高可用、可横向扩展、支持海量数据</td> <td>大规模、高并发系统</td> <td>中</td></tr></tbody></table> <h4 id="redis-cluster-配置示例-spring-boot"><a href="#redis-cluster-配置示例-spring-boot" class="header-anchor">#</a> Redis Cluster 配置示例（Spring Boot）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>spring:
+  redis:
+    cluster:
+      nodes: 192.168.1.101:6379,192.168.1.102:6379,192.168.1.103:6379,192.168.1.104:6379,192.168.1.105:6379,192.168.1.106:6379
+      max-redirects: 3 # 最大重定向次数（集群分片跳转）
+    lettuce:
+      pool:
+        max-active: 32 # 连接池最大活跃数
+        max-idle: 8 # 连接池最大空闲数
+        min-idle: 4 # 连接池最小空闲数
+    timeout: 3000 # 连接超时时间（毫秒）
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="_4-5-解决方案5-缓存预热-避免冷启动-推荐"><a href="#_4-5-解决方案5-缓存预热-避免冷启动-推荐" class="header-anchor">#</a> 4.5 解决方案5：缓存预热（避免冷启动，推荐）</h3> <p><strong>核心原理</strong>：系统启动时，主动加载热点数据到缓存，避免冷启动期间大量请求穿透到数据库（如秒杀系统启动后，秒杀商品缓存为空）。</p> <h4 id="实现要点-7"><a href="#实现要点-7" class="header-anchor">#</a> 实现要点</h4> <ul><li>预热数据：仅加载热点数据（如秒杀商品、首页热门商品），避免全量数据预热占用过多内存。</li> <li>预热时机：系统启动后（通过<code>CommandLineRunner</code>或<code>ApplicationRunner</code>），或流量低峰期（如凌晨2点）。</li> <li>异步预热：批量数据预热采用异步线程池，避免阻塞系统启动。</li></ul> <h4 id="代码示例-spring-boot-启动预热"><a href="#代码示例-spring-boot-启动预热" class="header-anchor">#</a> 代码示例（Spring Boot 启动预热）</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>@Component
+public class CacheWarmer implements CommandLineRunner {
+
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private CacheTtlUtil cacheTtlUtil;
+
+    // 热点数据：秒杀商品ID列表（可从配置中心动态获取）
+    private static final List&lt;Long&gt; HOT_SECKILL_GOODS_IDS = Arrays.asList(1001L, 1002L, 1003L);
+
+    @Override
+    public void run(String... args) throws Exception {
+        // 异步预热热点数据（避免阻塞系统启动）
+        CompletableFuture.runAsync(this::warmUpSeckillGoods);
+    }
+
+    // 预热秒杀商品缓存
+    private void warmUpSeckillGoods() {
+        log.info(&quot;开始预热秒杀商品缓存，共{}个商品&quot;, HOT_SECKILL_GOODS_IDS.size());
+        for (Long id : HOT_SECKILL_GOODS_IDS) {
+            try {
+                Goods goods = goodsMapper.selectById(id);
+                String cacheKey = &quot;goods:id:&quot; + id;
+                // 设置随机过期时间（24小时~26小时）
+                int ttl = cacheTtlUtil.getRandomTtl(24 * 3600, CacheTtlUtil.HotspotLevel.HIGH);
+                redisTemplate.opsForValue().set(cacheKey, goods, ttl, TimeUnit.SECONDS);
+                log.info(&quot;预热商品缓存成功，ID:{}&quot;, id);
+            } catch (Exception e) {
+                log.error(&quot;预热商品缓存失败，ID:{}&quot;, id, e);
+            }
+        }
+        log.info(&quot;秒杀商品缓存预热完成&quot;);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br></div></div><h3 id="_4-6-缓存雪崩方案组合建议"><a href="#_4-6-缓存雪崩方案组合建议" class="header-anchor">#</a> 4.6 缓存雪崩方案组合建议</h3> <ul><li>基础组合：过期时间随机化 + Redis高可用部署（避免大部分雪崩场景）。</li> <li>高可用组合：过期时间随机化 + 多级缓存 + 熔断降级 + Redis Cluster（核心系统首选）。</li> <li>冷启动防护：缓存预热（秒杀、大促场景必选）。</li></ul> <h2 id="五、实战最佳实践与监控告警"><a href="#五、实战最佳实践与监控告警" class="header-anchor">#</a> 五、实战最佳实践与监控告警</h2> <h3 id="_5-1-核心参数配置参考"><a href="#_5-1-核心参数配置参考" class="header-anchor">#</a> 5.1 核心参数配置参考</h3> <table><thead><tr><th>参数类型</th> <th>推荐值</th> <th>说明</th></tr></thead> <tbody><tr><td>缓存空值过期时间</td> <td>5~10分钟</td> <td>平衡内存占用与数据新鲜度</td></tr> <tr><td>布隆过滤器误判率</td> <td>0.01%~1%</td> <td>百万级数据推荐1%（内存占用低）</td></tr> <tr><td>互斥锁过期时间</td> <td>3~5秒</td> <td>大于DB查询+缓存更新总耗时（预留冗余）</td></tr> <tr><td>本地缓存过期时间</td> <td>2~5分钟</td> <td>短于Redis缓存，避免数据不一致</td></tr> <tr><td>本地缓存最大容量</td> <td>1~10万</td> <td>根据JVM内存调整（避免OOM）</td></tr> <tr><td>热点key缓存时间</td> <td>24小时（逻辑永不过期）</td> <td>结合异步续期机制</td></tr> <tr><td>限流QPS阈值</td> <td>数据库最大承载QPS的80%</td> <td>预留缓冲空间</td></tr></tbody></table> <h3 id="_5-2-数据一致性保障"><a href="#_5-2-数据一致性保障" class="header-anchor">#</a> 5.2 数据一致性保障</h3> <ul><li>缓存更新策略：推荐“更新数据库 + 删除缓存”（Cache-Aside模式），避免“更新缓存 + 更新数据库”的一致性问题。</li> <li>延迟删除：删除缓存时可添加短暂延迟（如100ms），解决“数据库更新未完成，缓存已被读取”的竞态条件。</li> <li>分布式场景：使用消息队列通知所有节点删除本地缓存，保证集群节点数据一致。</li></ul> <h3 id="_5-3-监控告警体系-提前预警"><a href="#_5-3-监控告警体系-提前预警" class="header-anchor">#</a> 5.3 监控告警体系（提前预警）</h3> <h4 id="核心监控指标"><a href="#核心监控指标" class="header-anchor">#</a> 核心监控指标</h4> <ul><li>缓存层：缓存命中率（阈值≥90%）、Redis内存使用率（阈值≤85%）、Redis节点存活状态、缓存过期key数量。</li> <li>数据库层：DB QPS（监控突发增长）、DB慢查询次数（阈值≤10次/分钟）、DB连接数（阈值≤最大连接数的80%）。</li> <li>业务层：接口响应时间（阈值≤500ms）、降级兜底触发次数（阈值≤100次/分钟）。</li></ul> <h4 id="监控工具组合"><a href="#监控工具组合" class="header-anchor">#</a> 监控工具组合</h4> <ul><li>采集：Prometheus + Redis Exporter + Spring Boot Actuator。</li> <li>可视化：Grafana（配置仪表盘，实时查看指标）。</li> <li>告警：AlertManager（支持邮件、短信、钉钉告警）。</li></ul> <h4 id="关键告警规则"><a href="#关键告警规则" class="header-anchor">#</a> 关键告警规则</h4> <ul><li>缓存命中率低于90%（持续5分钟）。</li> <li>Redis节点宕机（持续1分钟）。</li> <li>DB QPS突增50%以上（持续3分钟）。</li> <li>接口响应时间超过1秒（持续5分钟）。</li></ul> <h2 id="六、总结"><a href="#六、总结" class="header-anchor">#</a> 六、总结</h2> <p>Redis缓存三大问题的本质是“缓存未命中后的流量失控”，解决方案的核心思路是：<strong>提前拦截无效请求、控制并发查询流量、提升缓存可用性、保护数据库底线</strong>。</p> <table><thead><tr><th>问题类型</th> <th>核心解决方案</th> <th>推荐组合</th></tr></thead> <tbody><tr><td>缓存穿透</td> <td>布隆过滤器、缓存空值</td> <td>接口校验 + 布隆过滤器 + 缓存空值</td></tr> <tr><td>缓存击穿</td> <td>互斥锁、逻辑永不过期</td> <td>互斥锁 + 逻辑过期异步刷新</td></tr> <tr><td>缓存雪崩</td> <td>随机TTL、多级缓存、高可用部署</td> <td>随机TTL + 多级缓存 + Redis Cluster + 熔断降级</td></tr></tbody></table> <p>实际落地时，需根据业务场景灵活选择方案：中小规模系统可优先使用“缓存空值+随机TTL+互斥锁”的轻量方案；大规模高并发系统则需组合“布隆过滤器+多级缓存+Redis Cluster+熔断降级”的全方位防护体系。</p> <p>优先使用Redisson、RedisBloom、Caffeine等成熟框架，避免重复造轮子，同时通过监控告警提前发现风险，确保缓存体系稳定可靠。</p></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/tavio-zhang/blog/edit/master/docs/《Redis》笔记/5.Redis缓存设计.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="tags"><a href="/tags/?tag=%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F" title="标签">#缓存穿透</a><a href="/tags/?tag=%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF" title="标签">#缓存击穿</a><a href="/tags/?tag=%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9" title="标签">#缓存雪崩</a></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2026/01/21, 19:29:14</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/88227a/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Redis分布式锁</div></a> <a href="/pages/d2662c/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">Redis大Key与热Key</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/88227a/" class="prev">Redis分布式锁</a></span> <span class="next"><a href="/pages/d2662c/">Redis大Key与热Key</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/942d4b/"><div>
+            订单超时取消
+            <!----></div></a> <span class="date">01-21</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/87b303/"><div>
+            双 Token 登录
+            <!----></div></a> <span class="date">01-21</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/a3f3fd/"><div>
+            长短链接跳转
+            <!----></div></a> <span class="date">01-21</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:taviozhang@gmail.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/tavio-zhang" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> <!----></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.c6ba13aa.js" defer></script><script src="/assets/js/2.8d9f533d.js" defer></script><script src="/assets/js/72.9ba26fc5.js" defer></script>
+  </body>
+</html>
